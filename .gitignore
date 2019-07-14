@@ -1,0 +1,8 @@
+node_modules
+tmp
+.idea
+.scratch
+.env
+*.env
+*.log
+/content/data
