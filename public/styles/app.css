@@ -57,6 +57,8 @@ a:hover {
 
 .menu .selected a {
     color: black;
+    font-weight: 400;
+    font-style: normal;
 }
 
 .menu .first-in-block {

@@ -1,12 +1,12 @@
 {
-  "name": "trongrid",
+  "name": "kanievsky",
   "version": "0.1.0",
   "private": true,
-  "description": "Trongrid.io Website",
+  "description": "kanievsky.com",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TRON-US/trongrid-website.git"
+    "url": "git+https://github.com/sullof/kanievsky.git"
   },
   "author": "Francesco Sullo <francesco@sullo.co>",
   "license": "ISC",
