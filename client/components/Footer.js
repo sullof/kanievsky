@@ -1,4 +1,4 @@
-import {Link} from 'react-router-dom'
+const {Link} = ReactRouterDOM
 import Base from './Base'
 
 export default class PrimaryContent extends Base {
