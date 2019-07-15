@@ -1,10 +1,19 @@
 #!/usr/bin/env bash
 
-docker stop tweedentity-app-debug
-docker rm tweedentity-app-debug
+docker stop kanievsky
+docker rm kanievsky
 
-docker stop tweedentity-app
-docker rm tweedentity-app
+#!/usr/bin/env bash
+
+source .env && docker run -d \
+  --name kanievsky \
+  -p 8080 \
+  -v $PWD:/usr/src/app \
+  -e VIRTUAL_HOST=kanievsky.com,www.kanievsky.com \
+  -e LETSENCRYPT_HOST=kanievsky.com,www.kanievsky.com \
+  -e LETSENCRYPT_EMAIL=admin@kanievsky.com \
+  -w /usr/src/app node:carbon yarn start
+
 
 source ../.default.env && docker run -d \
   --name tweedentity-app \
