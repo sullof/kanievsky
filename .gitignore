@@ -30,3 +30,6 @@ yarn-error.log*
 /public/images/large
 /public/images/small
 /tmp
+*.env
+.scratch
+.idea
