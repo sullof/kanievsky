@@ -56,7 +56,7 @@ router.get('/images', async (req, res) => {
 
 router.get('/content', async (req, res) => {
   let content = {}
-  for (let what of req.query.what.split(',')) {
+  for (let what of req.query.what) {
     try {
       let doc = await req.levelDb.get(`content:${what}`)
       content[what] = doc

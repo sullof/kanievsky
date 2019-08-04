@@ -49,7 +49,7 @@ export default class App extends Common {
         }
       })
     this.request(`v1/content?${qs.stringify({
-      what: ['bio', 'news', 'home', 'contacts'].join(',')
+      what: ['bio', 'news', 'home', 'contacts']
     })}`)
       .then(res => {
         if (res.success) {

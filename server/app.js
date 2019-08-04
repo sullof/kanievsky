@@ -45,9 +45,7 @@ app.use('/index.html', function (req, res) {
   res.redirect('/')
 })
 
-
 app.post('/upload', (req, res, next) => {
-  // console.log(req);
   let imageFile = req.files.file
 
   imageFile.mv(`${__dirname}/public/works/${req.body.filename}.jpg`, function(err) {

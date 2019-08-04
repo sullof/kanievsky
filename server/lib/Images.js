@@ -47,6 +47,7 @@ class Images {
     return await sharp(origin)
       .extract({width: min, height: min, left: x, top: y})
       .resize({width: 180, height: 180})
+      .sharpen(1,1,1)
       .toBuffer()
       .then(async data => {
         dest = path.join(smallDir, pictureName)
