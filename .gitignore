@@ -25,5 +25,8 @@ yarn-error.log*
 /public/bundle.min.js
 
 .env
-/data
 /log
+/db
+/public/images/large
+/public/images/small
+/tmp

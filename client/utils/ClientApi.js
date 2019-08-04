@@ -1,17 +1,31 @@
+import axios from 'axios'
 
 class ClientApi {
 
-  fetch(api, method, body) {
-    const url = `${window.location.origin}/api/${api}`
-    return fetch(url, {
-      method,
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body)
-    }).then(response => response.json())
+  async request(
+    api,
+    method = 'get',
+    headers = {},
+    params = {}
+    ) {
 
+    params = Object.assign({
+      url: `${window.location.origin}/api/${api}`,
+      method,
+      responseType: 'json',
+      headers
+    }, params)
+
+    return axios(params)
+      .then(res => {
+        return res.data
+      })
+      .catch(err => {
+        return {
+          status: 500,
+          message: err.message
+        }
+      })
   }
 }
 

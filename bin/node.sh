@@ -7,10 +7,11 @@ docker rm kanievsky
 
 source .env && docker run -d \
   --name kanievsky \
-  -p 8080 \
+  -p 1965 \
   -v $PWD:/usr/src/app \
   -e VIRTUAL_HOST=kanievsky.com,www.kanievsky.com,gaelkanievsky.com,www.gaelkanievsky.com \
   -e LETSENCRYPT_HOST=kanievsky.com,www.kanievsky.com,gaelkanievsky.com,www.gaelkanievsky.com \
+  -e SECRET_SAULT=$SECRET_SAULT \
   -e LETSENCRYPT_EMAIL=admin@kanievsky.com \
   -w /usr/src/app node:carbon npm run start
 

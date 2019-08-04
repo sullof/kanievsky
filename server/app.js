@@ -2,14 +2,12 @@ const express = require('express')
 const fs = require('./lib/fs')
 const path = require('path')
 const cookieParser = require('cookie-parser')
-const api = require('./routes/api')
+const apiV1 = require('./routes/apiV1')
 const Logger = require('./lib/Logger')
 const bodyParser = require('body-parser')
-const level = require('level')
-const dbDir = path.resolve(__dirname, '../../data')
+const cors = require('cors')
 
-fs.ensureDirSync(dbDir)
-const db = level(path.join(dbDir, 'galleries'))
+const levelDb = require('./lib/db')
 
 process.on('uncaughtException', function (error) {
 
@@ -32,19 +30,34 @@ function getIndex() {
 const app = express()
 
 app.use((req, res, next) => {
-  req.levelDb = db
+  req.levelDb = levelDb
   next()
 })
 
+app.use(cors())
 app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
-
-app.use('/api', api)
+app.use('/api/v1', apiV1)
 
 app.use('/index.html', function (req, res) {
   res.redirect('/')
+})
+
+
+app.post('/upload', (req, res, next) => {
+  // console.log(req);
+  let imageFile = req.files.file
+
+  imageFile.mv(`${__dirname}/public/works/${req.body.filename}.jpg`, function(err) {
+    if (err) {
+      return res.status(500).send(err)
+    }
+
+    res.json({file: `public/works/${req.body.filename}.jpg`})
+  })
+
 })
 
 app.use('/:anything', function (req, res, next) {
@@ -99,7 +112,7 @@ app.use(function (err, req, res, next) {
 })
 
 process.on('SIGINT', () => {
-  db.close()
+  levelDb.close()
   console.info('Db connection closed.')
   process.exit()
 })
