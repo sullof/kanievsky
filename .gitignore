@@ -21,12 +21,15 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-package-lock.json
+
+/public/bundle.min.js
 
 .env
+/log
+/db
+/public/images/large
+/public/images/small
+/tmp
 *.env
-
 .scratch
 .idea
-log
-tmp

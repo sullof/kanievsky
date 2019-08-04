@@ -1,0 +1,163 @@
+html, body {
+    background-color: #f8f8f8;
+}
+
+div, p, span {
+    font-family: 'Lato', sans-serif;
+}
+
+a {
+    color: #444;
+}
+
+a:hover {
+    color: black;
+    background-color: white;
+}
+
+.logo {
+    color: black;
+    font-size: 130%;
+}
+
+.container {
+    padding: 2.0rem;
+}
+
+.social {
+
+}
+
+.footer {
+    margin-top: 40px;
+}
+
+.copyright {
+    font-size: 80%;
+}
+
+.menu {
+    margin-top: 20px;
+    font-style: italic;
+}
+
+.menu > div {
+    margin: 2px 0;
+}
+
+.menu hr {
+    margin: 16px 50% 16px 0;
+    border: 1px dashed #ddd;
+}
+
+.item {
+    font-size: 140%;
+    margin: 5px;
+    color: #ccc;
+}
+
+.menu .selected {
+    padding-left: 8px;
+    border-left: 4px solid #eee;
+}
+
+.menu .selected a {
+    color: black;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.menu .first-in-block {
+    margin-top: 12px;
+}
+
+.ReactGridGallery_tile {
+    margin: 12px !important;
+}
+
+.ReactGridGallery_tile-viewport {
+    -webkit-border-radius: 2px !important;
+    -moz-border-radius: 2px !important;
+    border-radius: 2px !important;
+    width: 180px !important;
+    height: 180px !important;
+}
+
+.ReactGridGallery_tile-viewport img{
+    width: 180px !important;
+    height: 180px !important;
+}
+
+.admin {
+    font-size: 80%;
+    /*font-style: normal;*/
+}
+
+.admin a {
+    font-style: normal;
+}
+
+.form-group {
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    margin-left: 13px;
+    width: 92%;
+}
+
+.clearBoth {
+    clear: both;
+}
+
+input {
+    background-color: white !important;
+}
+
+.files input.form-control {
+    outline: 2px dashed #92b0b3;
+    outline-offset: -10px;
+    -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
+    transition: outline-offset .15s ease-in-out, background-color .15s linear;
+    padding: 120px 0px 85px 35%;
+    text-align: center !important;
+    margin: 0;
+    width: 100% !important;
+}
+
+.error {
+    margin: 6px 0 12px;
+    padding: 6px 12px;
+    color: red;
+    font-weight: bold;
+    background-color: white;
+    border-radius: 4px;
+}
+
+.commands {
+    font-size: 80%;
+    font-weight: bold;
+    padding: 0 24px;
+}
+
+.confirm {
+    border: 1px solid #eee;
+    background-color: white;
+    padding: 24px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 4px;
+}
+
+.confirm img {
+    width: 50px;
+    height: 50px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+
+.confirm button {
+    margin: 2px 12px 2px 0;
+}
