@@ -30,23 +30,23 @@ class Images {
     const origin = path.join(uploadDir, pictureName)
     let dest = path.join(largeDir, pictureName)
 
-    await fs.copyAsync(origin,dest)
+    await fs.copyAsync(origin, dest)
 
     const {width, height} = await sharp(origin).metadata()
     let x, y, min
     if (width < height) {
       min = width
       x = 0
-      y = Math.round((height - width) /2)
+      y = Math.round((height - width) / 2)
     } else {
       min = height
-      x = Math.round((width - height) /2)
+      x = Math.round((width - height) / 2)
       y = 0
     }
 
     return await sharp(origin)
-      .extract({ width: min, height: min, left: x, top: y })
-      .resize({ width: 180, height: 180 })
+      .extract({width: min, height: min, left: x, top: y})
+      .resize({width: 180, height: 180})
       .toBuffer()
       .then(async data => {
         dest = path.join(smallDir, pictureName)
@@ -77,9 +77,12 @@ class Images {
     let images = await this.list()
     let original = images[what]
     let changes = []
-    for (let i=0;i<original.length;i++) {
+    for (let i = 0; i < original.length; i++) {
       if (!indexes.includes(i)) {
         changes.push(original[i])
+      } else {
+        fs.unlink(path.join(largeDir, original[i].src.split('/')[3]))
+        fs.unlink(path.join(smallDir, original[i].src.split('/')[3]))
       }
     }
     images[what] = changes

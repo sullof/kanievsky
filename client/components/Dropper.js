@@ -38,10 +38,7 @@ export default class Dropper extends Base {
       }
     }
     for (var z = 0; z < err.length; z++) {
-      // TODO
-      // if message not same old that mean has error
-      // discard selected file
-      console.error(err[z])
+      this.setError('Wrong format. Accepted: gif, jpg and png')
       event.target.value = null
     }
     return true
