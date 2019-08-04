@@ -54,6 +54,30 @@ router.get('/images', async (req, res) => {
   }
 })
 
+router.get('/content', async (req, res) => {
+  let content = {}
+  for (let what of req.query.what.split(',')) {
+    try {
+      let doc = await req.levelDb.get(`content:${what}`)
+      content[what] = doc
+    } catch (e) {
+      content[what] = '...'
+    }
+  }
+  res.json({
+    success: true,
+    content
+  })
+})
+
+router.post('/save', async (req, res) => {
+  const {what, content} = req.body
+  await req.levelDb.put(`content:${what}`, content)
+  res.json({
+    success: true
+  })
+})
+
 router.post('/upload', function(req, res) {
 
   upload(req, res)

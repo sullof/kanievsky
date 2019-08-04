@@ -25,7 +25,12 @@ export default class Works extends Base {
   componentDidMount() {
     const what = this.props.what
     this.setState({
-      images: this.Store.images[what],
+      images: this.Store.images[what].map(e => {
+        if (!this.Store.isAdminMode) {
+          delete e.isSelected
+        }
+        return e
+      }),
       what
     })
   }

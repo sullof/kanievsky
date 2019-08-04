@@ -161,3 +161,45 @@ input {
 .confirm button {
     margin: 2px 12px 2px 0;
 }
+
+.underEditor {
+    padding: 12px;
+}
+
+.underEditor button {
+    margin-right: 12px;
+}
+
+.ql-editor {
+    min-height: 200px;
+}
+
+.ql-editor p {
+   padding: 4px 0;
+}
+
+.ql-toolbar.ql-snow {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+
+}
+.ql-container.ql-snow {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+h2 {
+    font-size: 2.5rem;
+}
+
+h3 {
+    font-size: 2rem;
+}
+
+p {
+    margin: 6px 0;
+}

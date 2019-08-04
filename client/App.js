@@ -1,4 +1,4 @@
-
+import qs from 'qs'
 const {BrowserRouter, Route} = ReactRouterDOM
 import ls from 'local-storage'
 
@@ -10,6 +10,7 @@ import Home from './components/Home'
 import Works from './components/Works'
 import Login from './components/Login'
 import Logout from './components/Logout'
+import Content from './components/Content'
 
 export default class App extends Common {
 
@@ -17,7 +18,11 @@ export default class App extends Common {
     super(props)
 
     this.state = {
-      Store: {}
+      Store: {
+        content: {},
+        editing: {},
+        temp: {}
+      }
     }
     this.setStore = this.setStore.bind(this)
     let accessToken = ls('accessToken')
@@ -35,12 +40,24 @@ export default class App extends Common {
   }
 
   async componentDidMount() {
-    const res = await this.request('v1/images')
-    if (res && res.success) {
-      this.setStore({
-        images: res.images
-      }, true)
-    }
+    this.request('v1/images')
+      .then(res => {
+        if (res.success) {
+          this.setStore({
+            images: res.images
+          }, true)
+        }
+      })
+    this.request(`v1/content?${qs.stringify({
+      what: ['bio', 'news', 'home', 'contacts'].join(',')
+    })}`)
+      .then(res => {
+        if (res.success) {
+          this.setStore({
+            content: res.content
+          }, true)
+        }
+      })
   }
 
   setStore(newProps, localStorage) {
@@ -86,6 +103,19 @@ export default class App extends Common {
       }
     }
 
+
+    const content = (what) => {
+      return () => {
+        return (
+          <Content
+            Store={this.state.Store}
+            setStore={this.setStore}
+            what={what}
+          />
+        )
+      }
+    }
+
     const login = () => {
       return (
         <Login
@@ -118,6 +148,8 @@ export default class App extends Common {
           </div>
           <div className="column column-80">
             <Route exact path="/" component={home}/>
+            <Route exact path="/bio" component={content('bio')}/>
+            <Route exact path="/news" component={content('news')}/>
             {
               this.state.Store.images ? <div>
               <Route exact path="/works/paintings" component={works('paintings')}/>
@@ -126,6 +158,7 @@ export default class App extends Common {
               </div>
                 : <div/>
             }
+            <Route exact path="/contacts" component={content('contacts')}/>
             <Route exact path="/login" component={login}/>
             <Route exact path="/logout" component={logout}/>
           </div>
