@@ -13,6 +13,7 @@ export default class Menu extends Base {
     this.updateState = this.updateState.bind(this)
     this.setBack = this.setBack.bind(this)
     this.toggleAdminMode = this.toggleAdminMode.bind(this)
+    this.makeNotVisible = this.makeNotVisible.bind(this)
   }
 
   updateState() {
@@ -43,20 +44,26 @@ export default class Menu extends Base {
     })
   }
 
+  makeNotVisible() {
+    this.store({
+      menuVisibility: false
+    })
+  }
+
   render() {
     return (
-      <div className="menu" onClick={this.updateState}>
-        <div className={this.isMe('/')}><Link to="/">Home</Link></div>
-        <div className={this.isMe('/bio')}><Link to="/bio">Bio</Link></div>
-        <div className={this.isMe('/news')}><Link to="/news">News</Link></div>
+      <div className={`menu ${this.Store.menuVisibility ? 'show' : ''}`} onClick={this.updateState}>
+        <div onClick={this.makeNotVisible} className={this.isMe('/')}><Link to="/">Home</Link></div>
+        <div onClick={this.makeNotVisible} className={this.isMe('/bio')}><Link to="/bio">Bio</Link></div>
+        <div onClick={this.makeNotVisible} className={this.isMe('/news')}><Link to="/news">News</Link></div>
         <hr/>
-        <div className={this.isMe('/works/paintings')}><Link to="/works/paintings">Paintings</Link></div>
-        <div className={this.isMe('/works/drawings')}><Link to="/works/drawings">Drawings</Link></div>
-        <div className={this.isMe('/works/sculptures')}><Link to="/works/sculptures">Sculptures</Link></div>
+        <div onClick={this.makeNotVisible} className={this.isMe('/works/paintings')}><Link to="/works/paintings">Paintings</Link></div>
+        <div onClick={this.makeNotVisible} className={this.isMe('/works/drawings')}><Link to="/works/drawings">Drawings</Link></div>
+        <div onClick={this.makeNotVisible} className={this.isMe('/works/sculptures')}><Link to="/works/sculptures">Sculptures</Link></div>
         <hr/>
-        <div className={this.isMe('/contacts')}><Link to="/contacts">Contacts</Link></div>
+        <div onClick={this.makeNotVisible} className={this.isMe('/contacts')}><Link to="/contacts">Contacts</Link></div>
         <hr/>
-        <div className="admin">
+        <div onClick={this.makeNotVisible}  className="admin">
           {
             this.Store.accessToken
               ? <div>
@@ -74,6 +81,7 @@ export default class Menu extends Base {
           }
         </div>
       </div>
+
     )
   }
 }

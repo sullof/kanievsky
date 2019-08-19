@@ -18,6 +18,7 @@ a:hover {
 .logo {
     color: black;
     font-size: 130%;
+    margin-bottom: 8px;
 }
 
 .container {
@@ -36,19 +37,6 @@ a:hover {
     font-size: 80%;
 }
 
-.menu {
-    margin-top: 20px;
-    font-style: italic;
-}
-
-.menu > div {
-    margin: 2px 0;
-}
-
-.menu hr {
-    margin: 16px 50% 16px 0;
-    border: 1px dashed #ddd;
-}
 
 .item {
     font-size: 140%;
@@ -83,7 +71,7 @@ a:hover {
     height: 180px !important;
 }
 
-.ReactGridGallery_tile-viewport img{
+.ReactGridGallery_tile-viewport img {
     width: 180px !important;
     height: 180px !important;
 }
@@ -175,7 +163,7 @@ input {
 }
 
 .ql-editor p {
-   padding: 4px 0;
+    padding: 4px 0;
 }
 
 .ql-toolbar.ql-snow {
@@ -183,6 +171,7 @@ input {
     border-top-right-radius: 4px;
 
 }
+
 .ql-container.ql-snow {
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
@@ -202,4 +191,73 @@ h3 {
 
 p {
     margin: 6px 0;
+}
+
+.menu-trigger {
+    float: right;
+    margin-top: -9px;
+}
+
+.menu {
+    display: none;
+    margin-top: 20px;
+    font-style: italic;
+    text-align: right;
+}
+
+.menu.show {
+    display: block;
+}
+
+.menu > div {
+    margin: 2px 0;
+}
+
+.menu hr {
+    display: none;
+}
+
+.only-mobile {
+    display: block !important;
+}
+
+.only-desktop {
+    display: none !important;
+}
+
+@media screen and (min-width: 40.0rem) {
+
+    .only-mobile {
+        display: none !important;
+    }
+
+    .only-desktop {
+        display: block !important;
+    }
+
+    .menu {
+        display: block;
+        margin-top: 20px;
+        font-style: italic;
+        text-align: left;
+    }
+
+    .menu > div {
+        margin: 2px 0;
+    }
+
+    .menu hr {
+        display: block;
+        margin: 16px 50% 16px 0;
+        border: 1px dashed #ddd;
+    }
+
+    .footer.mobile {
+        display: none;
+    }
+
+    .footer.desktop {
+        display: block;
+    }
+
 }

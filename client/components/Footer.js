@@ -5,7 +5,7 @@ export default class PrimaryContent extends Base {
 
   render() {
     return (
-      <div className="footer">
+      <div className={`footer ${this.props.mobile ? 'only-mobile' : 'only-desktop'}`}>
         <div className="social">
           <a className="item" target="_blank" href="https://www.instagram.com/gaelkanievsky">
             <i className="fab fa-instagram"></i>

@@ -1,5 +1,6 @@
 import qs from 'qs'
 const {BrowserRouter, Route} = ReactRouterDOM
+
 import ls from 'local-storage'
 
 import Common from './components/Common'
@@ -21,7 +22,8 @@ export default class App extends Common {
       Store: {
         content: {},
         editing: {},
-        temp: {}
+        temp: {},
+        menuVisibility: false
       }
     }
     this.setStore = this.setStore.bind(this)
@@ -134,11 +136,12 @@ export default class App extends Common {
       )
     }
 
-
     return <BrowserRouter>
       <div className="container">
         <div className="row">
           <div className="column">
+            <div className="menu-trigger only-mobile" onClick={() => this.setStore({menuVisibility: !this.state.Store.menuVisibility})}>
+              <i className="fas fa-bars"></i></div>
             <Logo/>
             <Menu
               Store={this.state.Store}
@@ -146,22 +149,41 @@ export default class App extends Common {
             />
             <Footer/>
           </div>
-          <div className="column column-80">
+          <div className="column column-100 only-mobile">
             <Route exact path="/" component={home}/>
             <Route exact path="/bio" component={content('bio')}/>
             <Route exact path="/news" component={content('news')}/>
             {
               this.state.Store.images ? <div>
-              <Route exact path="/works/paintings" component={works('paintings')}/>
-              <Route exact path="/works/sculptures" component={works('sculptures')}/>
-              <Route exact path="/works/drawings" component={works('drawings')}/>
-              </div>
+                  <Route exact path="/works/paintings" component={works('paintings')}/>
+                  <Route exact path="/works/sculptures" component={works('sculptures')}/>
+                  <Route exact path="/works/drawings" component={works('drawings')}/>
+                </div>
                 : <div/>
             }
             <Route exact path="/contacts" component={content('contacts')}/>
             <Route exact path="/login" component={login}/>
             <Route exact path="/logout" component={logout}/>
           </div>
+          <div className="column column-80 only-desktop">
+            <Route exact path="/" component={home}/>
+            <Route exact path="/bio" component={content('bio')}/>
+            <Route exact path="/news" component={content('news')}/>
+            {
+              this.state.Store.images ? <div>
+                  <Route exact path="/works/paintings" component={works('paintings')}/>
+                  <Route exact path="/works/sculptures" component={works('sculptures')}/>
+                  <Route exact path="/works/drawings" component={works('drawings')}/>
+                </div>
+                : <div/>
+            }
+            <Route exact path="/contacts" component={content('contacts')}/>
+            <Route exact path="/login" component={login}/>
+            <Route exact path="/logout" component={logout}/>
+          </div>
+          <Footer
+          mobile={true}
+          />
         </div>
       </div>
     </BrowserRouter>
