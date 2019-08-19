@@ -208,6 +208,8 @@ p {
 
 .menu.show {
     display: block;
+    margin-top: -14px;
+    margin-bottom: 8px;
 }
 
 .menu > div {
