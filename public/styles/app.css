@@ -46,7 +46,6 @@ a:hover {
 
 .menu .selected {
     padding-left: 8px;
-    border-left: 4px solid #eee;
 }
 
 .menu .selected a {
@@ -243,6 +242,10 @@ p {
     .ReactGridGallery_tile-viewport img {
         width: 180px !important;
         height: 180px !important;
+    }
+
+    .menu .selected {
+        border-left: 4px solid #eee;
     }
 
     .only-mobile {
