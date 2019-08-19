@@ -55,7 +55,7 @@ a:hover {
 }
 
 .ReactGridGallery_tile {
-    margin: 12px 12px 0 0 !important;
+    margin: 12px !important;
     width: 140px !important;
 }
 
@@ -226,18 +226,17 @@ p {
 @media screen and (min-width: 40.0rem) {
 
     .ReactGridGallery_tile {
-        margin: 12px !important;
-        width: auto;
+        width: 100% !important;
     }
 
     .ReactGridGallery_tile-viewport {
-        width: 180px !important;
-        height: 180px !important;
+        width: 100% !important;
+        height: 100% !important;
     }
 
     .ReactGridGallery_tile-viewport img {
-        width: 180px !important;
-        height: 180px !important;
+        width: 100% !important;
+        height: 100% !important;
     }
 
     .menu .selected {
