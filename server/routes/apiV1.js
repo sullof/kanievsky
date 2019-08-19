@@ -59,9 +59,9 @@ router.get('/content', async (req, res) => {
   for (let what of req.query.what) {
     try {
       let doc = await req.levelDb.get(`content:${what}`)
-      content[what] = doc
+      content[what] = doc || '--'
     } catch (e) {
-      content[what] = '...'
+      content[what] = '--'
     }
   }
   res.json({
