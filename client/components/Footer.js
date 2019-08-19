@@ -16,9 +16,9 @@ export default class PrimaryContent extends Base {
           <a className="item" href="mailto:gael@kanievsky.com">
             <i className="fas fa-envelope-square"></i>
           </a>
-          <a className="item" href="">
-            <i className="fas fa-share"></i>
-          </a>
+          {/*<a className="item" href="">*/}
+          {/*  <i className="fas fa-share"></i>*/}
+          {/*</a>*/}
         </div>
         <div className="copyright">
           &copy; 2019 Gael Kanievsky
