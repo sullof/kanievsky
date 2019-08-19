@@ -56,21 +56,22 @@ a:hover {
 
 .ReactGridGallery_tile {
     margin: 12px !important;
-    width: 140px !important;
+    width: 100% !important;
 }
 
 .ReactGridGallery_tile-viewport {
     -webkit-border-radius: 2px !important;
     -moz-border-radius: 2px !important;
     border-radius: 2px !important;
-    width: 140px !important;
-    height: 140px !important;
+    width: 100% !important;
+    height: 100% !important;
 }
 
 .ReactGridGallery_tile-viewport img {
-    width: 140px !important;
-    height: 140px !important;
+    width: 100% !important;
+    height: 100% !important;
 }
+
 
 .admin {
     font-size: 80%;
@@ -226,17 +227,17 @@ p {
 @media screen and (min-width: 40.0rem) {
 
     .ReactGridGallery_tile {
-        width: 100% !important;
+        width: auto;
     }
 
     .ReactGridGallery_tile-viewport {
-        width: 100% !important;
-        height: 100% !important;
+        width: 180px !important;
+        height: 180px !important;
     }
 
     .ReactGridGallery_tile-viewport img {
-        width: 100% !important;
-        height: 100% !important;
+        width: 180px !important;
+        height: 180px !important;
     }
 
     .menu .selected {
