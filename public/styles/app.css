@@ -61,19 +61,20 @@ a:hover {
 
 .ReactGridGallery_tile {
     margin: 12px !important;
+    width: 140px !important;
 }
 
 .ReactGridGallery_tile-viewport {
     -webkit-border-radius: 2px !important;
     -moz-border-radius: 2px !important;
     border-radius: 2px !important;
-    width: 180px !important;
-    height: 180px !important;
+    width: 140px !important;
+    height: 140px !important;
 }
 
 .ReactGridGallery_tile-viewport img {
-    width: 180px !important;
-    height: 180px !important;
+    width: 140px !important;
+    height: 140px !important;
 }
 
 .admin {
@@ -226,6 +227,21 @@ p {
 }
 
 @media screen and (min-width: 40.0rem) {
+
+    .ReactGridGallery_tile {
+        margin: 12px !important;
+        width: auto;
+    }
+
+    .ReactGridGallery_tile-viewport {
+        width: 180px !important;
+        height: 180px !important;
+    }
+
+    .ReactGridGallery_tile-viewport img {
+        width: 180px !important;
+        height: 180px !important;
+    }
 
     .only-mobile {
         display: none !important;
