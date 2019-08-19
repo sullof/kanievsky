@@ -55,7 +55,6 @@ a:hover {
 }
 
 .ReactGridGallery_tile {
-    margin: 12px !important;
     width: 100% !important;
 }
 
@@ -227,6 +226,7 @@ p {
 @media screen and (min-width: 40.0rem) {
 
     .ReactGridGallery_tile {
+        margin: 12px !important;
         width: auto;
     }
 
