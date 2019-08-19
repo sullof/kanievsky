@@ -55,7 +55,7 @@ a:hover {
 }
 
 .ReactGridGallery_tile {
-    margin: 12px !important;
+    margin: 12px 12px 0 0 !important;
     width: 140px !important;
 }
 
