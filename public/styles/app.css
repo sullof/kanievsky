@@ -29,10 +29,6 @@ a:hover {
 
 }
 
-.footer {
-    margin-top: 40px;
-}
-
 .copyright {
     font-size: 80%;
 }
@@ -278,6 +274,7 @@ p {
     }
 
     .footer.desktop {
+        margin-top: 40px;
         display: block;
     }
 
