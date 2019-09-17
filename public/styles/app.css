@@ -227,7 +227,7 @@ p {
 
     .ReactGridGallery_tile {
         margin: 12px !important;
-        width: auto;
+        width: auto !important;
     }
 
     .ReactGridGallery_tile-viewport {
