@@ -73,6 +73,18 @@ class Images {
       })
   }
 
+  async caption(what, thumbnail, caption) {
+    let images = await this.list()
+    let original = images[what]
+    for (let i = 0; i < original.length; i++) {
+      if (original[i].thumbnail === thumbnail) {
+        original[i].caption = caption
+      }
+    }
+    await this.db.put('images', JSON.stringify(images))
+    return images
+  }
+
   async del(what, indexes) {
     indexes = indexes.map(e => parseInt(e))
     let images = await this.list()

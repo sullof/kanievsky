@@ -93,4 +93,15 @@ router.get('/delete', async function(req, res) {
   })
 })
 
+router.get('/caption', async function(req, res) {
+
+  const images = new Images(req.levelDb)
+  const {what, thumbnail, caption} = req.query
+  res.json({
+    success: true,
+    images: await images.caption(what, thumbnail, caption)
+  })
+})
+
+
 module.exports = router

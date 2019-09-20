@@ -4,13 +4,30 @@ import Dropper from './Dropper'
 
 import Gallery from 'react-grid-gallery'
 
+import Modal from 'react-modal'
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)'
+  }
+}
+
+// Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
+Modal.setAppElement('#root')
 
 export default class Works extends Base {
 
   constructor(props) {
     super(props)
 
-    this.state = {}
+    this.state = {
+      modalIsOpen: false
+    }
 
     this.bindAll([
       'onSelectImage',
@@ -18,8 +35,33 @@ export default class Works extends Base {
       'countSelected',
       'deleteImage',
       'dontDelete',
-      'onClickSelectAll'
+      'onClickSelectAll',
+      'openModal',
+      'afterOpenModal',
+      'closeModal',
+      'captionHandler',
+      'saveNewCaption'
     ])
+
+  }
+
+  openModal() {
+    this.setState({modalIsOpen: true})
+  }
+
+  afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    // this.subtitle.style.color = '#f00'
+  }
+
+  closeModal() {
+    this.setState({modalIsOpen: false})
+  }
+
+  captionHandler(event) {
+    this.setState({
+      caption: event.target.value
+    })
   }
 
   componentDidMount() {
@@ -59,6 +101,35 @@ export default class Works extends Base {
         }
       }
       this.setState({imagesToBeDeleted})
+    }
+  }
+
+  async editCaption() {
+    const indexes = this.getSelectedImages()
+    if (indexes.length === 1) {
+      let image = this.state.images[indexes[0]]
+      this.setState({
+        thumbnail: image.thumbnail,
+        caption: image.caption
+      })
+      this.openModal()
+    } else {
+     // TODO add error
+    }
+  }
+
+  async saveNewCaption() {
+    this.onClickSelectAll()
+    this.closeModal()
+    const res = await this.request(`v1/caption?${qs.stringify({
+      what: this.state.what, 
+      thumbnail: this.state.thumbnail,
+      caption: this.state.caption
+    })}`)
+    if (res && res.success) {
+      this.store({
+        images: res.images
+      })
     }
   }
 
@@ -130,6 +201,29 @@ export default class Works extends Base {
     if (this.state.images) {
       return (
         <div>
+          <Modal
+            isOpen={this.state.modalIsOpen}
+            onAfterOpen={this.afterOpenModal}
+            onRequestClose={this.closeModal}
+            style={customStyles}
+            contentLabel="Example Modal"
+          >
+            <div>Edit the caption</div>
+            {
+              this.state.thumbnail ?
+                <div>
+                  <img style={{margin: 16 }} src={this.state.thumbnail}/>
+                  <form>
+                    <input
+                      name="user" placeholder="Caption" id="caption"
+                      onChange={this.captionHandler} value={this.state.caption}
+                    />
+                  </form>
+                </div> : null
+            }
+            <button onClick={this.saveNewCaption}>Save</button> &nbsp;
+            <button onClick={this.closeModal}>Cancel</button>
+          </Modal>
           {
             this.state.imagesToBeDeleted
               ? <div className="confirm"><p>Are you sure you want to delete the following images?</p>
@@ -143,7 +237,10 @@ export default class Works extends Base {
                 <button type="button" className="button button-small" onClick={this.dontDelete}>No</button>
               </div>
               : this.countSelected() > 0
-              ? <div className="commands">&gt; <a onClick={() => this.deleteImage()}>Delete selected images</a> | &gt; <a onClick={() => this.onClickSelectAll()}>Unselect images</a></div>
+              ?
+              <div className="commands">&gt; <a onClick={() => this.deleteImage()}>Delete selected images</a> | &gt; <a
+                onClick={() => this.editCaption()}>Edit caption</a> | &gt; <a onClick={() => this.onClickSelectAll()}>Unselect
+                images</a></div>
               : null
           }
           <Gallery
