@@ -37,7 +37,7 @@ app.use((req, res, next) => {
 app.use(cors())
 app.use(cookieParser())
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({limit: '10mb', extended: false}))
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}))
 
 app.use('/api/v1', apiV1)
 
