@@ -1,6 +1,6 @@
 const path = require('path')
 const fs = require('./fs')
-const sharp = require('sharp')
+const Jimp = require('jimp')
 
 const uploadDir = path.resolve(__dirname, '../../tmp/uploads')
 const largeDir = path.resolve(__dirname, '../../public/images/large')
@@ -31,46 +31,32 @@ class Images {
     let dest = path.join(largeDir, pictureName)
 
     await fs.copyAsync(origin, dest)
+    let image = await Jimp.read(origin)
+    const width = image.bitmap.width
+    const height = image.bitmap.height
 
-    const {width, height} = await sharp(origin).metadata()
-    let x, y, min
-    if (width < height) {
-      min = width
-      x = 0
-      y = Math.round((height - width) / 2)
-    } else {
-      min = height
-      x = Math.round((width - height) / 2)
-      y = 0
+    let min = width < height ? width : height
+
+    await image.contain(min, min, Jimp.HORIZONTAL_ALIGN_CENTER | Jimp.VERTICAL_ALIGN_MIDDLE)
+    await image.resize(180, 180)
+    await image.writeAsync(path.join(smallDir, pictureName))
+
+    const list = await this.list()
+    if (!list[what]) {
+      list[what] = []
+    }
+    const newImage = {
+      src: `/images/large/${pictureName}`,
+      thumbnail: `/images/small/${pictureName}`,
+      thumbnailWidth: 180,
+      thumbnailHeight: 180,
+      caption
     }
 
-    return await sharp(origin)
-      .extract({width: min, height: min, left: x, top: y})
-      .resize({width: 180, height: 180})
-      .sharpen(1,1,1)
-      .toBuffer()
-      .then(async data => {
-        dest = path.join(smallDir, pictureName)
-        await fs.writeFileAsync(dest, data)
-        fs.unlink(origin)
+    list[what].push(newImage)
+    await this.db.put('images', JSON.stringify(list))
 
-        const list = await this.list()
-        if (!list[what]) {
-          list[what] = []
-        }
-        const newImage = {
-          src: `/images/large/${pictureName}`,
-          thumbnail: `/images/small/${pictureName}`,
-          thumbnailWidth: 180,
-          thumbnailHeight: 180,
-          caption
-        }
-
-        list[what].push(newImage)
-        await this.db.put('images', JSON.stringify(list))
-
-        return newImage
-      })
+    return newImage
   }
 
   async caption(what, thumbnail, caption) {
