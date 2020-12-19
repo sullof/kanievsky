@@ -35,9 +35,18 @@ class Images {
     const width = image.bitmap.width
     const height = image.bitmap.height
 
-    let min = width < height ? width : height
+    let x, y, min
+    if (width < height) {
+      min = width
+      x = 0
+      y = Math.round((height - width) / 2)
+    } else {
+      min = height
+      x = Math.round((width - height) / 2)
+      y = 0
+    }
 
-    await image.contain(min, min, Jimp.HORIZONTAL_ALIGN_CENTER | Jimp.VERTICAL_ALIGN_MIDDLE)
+    await image.crop(x, y, min, min)
     await image.resize(180, 180)
     await image.writeAsync(path.join(smallDir, pictureName))
 
