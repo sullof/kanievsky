@@ -1,6 +1,7 @@
 import Base from './Base'
 
-const {Redirect, BrowserRouter} = ReactRouterDOM
+// eslint-disable-next-line no-undef
+const {Redirect} = ReactRouterDOM
 
 export default class Logout extends Base {
 

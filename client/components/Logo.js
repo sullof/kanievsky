@@ -1,4 +1,4 @@
-
+// eslint-disable-next-line no-undef
 export default class Logo extends React.Component {
   render() {
     return (

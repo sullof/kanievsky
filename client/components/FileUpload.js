@@ -1,4 +1,4 @@
-
+// eslint-disable-next-line no-undef
 class FileUpload extends React.Component {
   constructor(props) {
     super(props)

@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 const {Link} = ReactRouterDOM
 import Base from './Base'
 

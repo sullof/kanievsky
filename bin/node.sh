@@ -13,5 +13,5 @@ source .env && docker run -d \
   -e LETSENCRYPT_HOST=kanievsky.com,www.kanievsky.com,gaelkanievsky.com,www.gaelkanievsky.com \
   -e SECRET_SAULT=$SECRET_SAULT \
   -e LETSENCRYPT_EMAIL=admin@kanievsky.com \
-  -w /usr/src/app node:carbon npm run start
+  -w /usr/src/app node:12.20.0-alpine3.10 npm run start
 

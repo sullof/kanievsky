@@ -15,12 +15,12 @@
         "strict": [2, "never"],
         "react/jsx-uses-react": 2,
         "react/jsx-uses-vars": 2,
-        "react/react-in-jsx-scope": 2,
         "no-unused-vars": [ 2, {"vars": "all", "args": "none"} ],
         "eqeqeq": [ 2, "smart" ],
         "key-spacing": [ 2, { "beforeColon": false, "afterColon": true } ],
         "no-console": ["error", { "allow": ["debug", "info", "warn", "error"] }],
-        "no-empty": ["error", { "allowEmptyCatch": true }]
+        "no-empty": ["error", { "allowEmptyCatch": true }],
+        "react/react-in-jsx-scope": "off"
 //        "object-curly-spacing": [ 2, "always" ]
     },
     "parserOptions": {

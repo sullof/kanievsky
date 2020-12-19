@@ -1,6 +1,6 @@
 import Base from './Base'
-import clientApi from '../utils/ClientApi'
 
+// eslint-disable-next-line no-undef
 const {Redirect} = ReactRouterDOM
 
 export default class Login extends Base {

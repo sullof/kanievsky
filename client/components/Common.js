@@ -1,6 +1,7 @@
 import ls from 'local-storage'
 import clientApi  from '../utils/ClientApi'
 
+// eslint-disable-next-line no-undef
 export default class Common extends React.Component {
 
   constructor(props) {

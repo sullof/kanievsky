@@ -123,6 +123,10 @@ input {
     padding: 0 24px;
 }
 
+.commands a {
+    cursor: pointer;
+}
+
 .confirm {
     border: 1px solid #eee;
     background-color: white;

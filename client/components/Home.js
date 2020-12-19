@@ -1,7 +1,5 @@
-const {Link} = ReactRouterDOM
-
+// eslint-disable-next-line no-undef
 export default class Home extends React.Component {
-
 
   render() {
 

@@ -134,7 +134,7 @@ export default class Content extends Base {
                 this.Store
                   ? this.Store.content[this.props.what]
                   : '<div/>'
-            }}></div>
+            }}/>
         }
 
       </div>
