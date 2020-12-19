@@ -5,7 +5,7 @@ docker rm kanievsky
 
 #!/usr/bin/env bash
 
-source .env && docker run -d \
+source .env && docker run -it \
   --name kanievsky \
   -p 1965 \
   -v $PWD:/usr/src/app \
