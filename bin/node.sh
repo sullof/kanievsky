@@ -12,4 +12,4 @@ docker run -d \
   -e VIRTUAL_HOST=kanievsky.com,www.kanievsky.com,gaelkanievsky.com,www.gaelkanievsky.com \
   -e LETSENCRYPT_HOST=kanievsky.com,www.kanievsky.com,gaelkanievsky.com,www.gaelkanievsky.com \
   -e LETSENCRYPT_EMAIL=admin@kanievsky.com \
-  -w /usr/src/app node:12.20.0-alpine3.10 npm run start
+  -w /usr/src/app node:16 npm run start
