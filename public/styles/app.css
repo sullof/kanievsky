@@ -2,6 +2,21 @@
 
 html, body {
     background-color: whitesmoke;
+    margin:0;
+    padding:0;
+}
+
+
+div.underRoot {
+
+    background-image: url(../images/homebg.jpeg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    height:100%;
 }
 
 div, p, span {
@@ -23,6 +38,14 @@ a:hover {
     font-weight: 700;
     margin-bottom: 8px;
     line-height: 3rem;
+}
+
+.underRoot .logo {
+    color: transparent;
+}
+
+.underRoot .menu a, .underRoot .footer, .underRoot .footer a {
+    color: white !important;
 }
 
 .social {
@@ -384,4 +407,13 @@ button.cancel {
     margin-top: 12px !important;
     font-size: 90%;
     color: darkmagenta;
+}
+
+.logoHome {
+    margin-top: 80px;
+}
+
+.logoHome span {
+    font-size: 600%;
+    color: white;
 }

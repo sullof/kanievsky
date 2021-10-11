@@ -18,7 +18,6 @@ export default class Login extends Base {
     ])
   }
 
-
   userHandler(event) {
     this.setState({
       user: event.target.value

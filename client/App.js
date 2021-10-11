@@ -26,7 +26,10 @@ export default class App extends Common {
         editing: {},
         temp: {},
         menuVisibility: false
-      }
+      },
+      width: window.innerWidth,
+      height: window.innerHeight,
+      isHome: window.location.pathname.length < 2
     }
     this.setStore = this.setStore.bind(this)
     let accessToken = ls('accessToken')
@@ -41,9 +44,50 @@ export default class App extends Common {
         this.setStore({accessToken})
       }
     }
+
+    this.bindMany([
+      'updateDimensions',
+      'setTimeout',
+      'endTimeout',
+      'checkPathname'
+    ])
+  }
+
+  setTimeout(func, time) {
+    this.timerId = setTimeout(() => this.endTimeout(func), time)
+  }
+
+  endTimeout(func, time) {
+    clearTimeout(this.timerId)
+    this.timerId = null
+    func()
+  }
+
+  updateDimensions() {
+    this.setState({
+      width: window.innerWidth,
+      height: window.innerHeight
+    })
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions)
+  }
+
+  checkPathname() {
+    let {isHome} = this.state
+    let len = window.location.pathname.length
+    if ((isHome && len > 1) || (!isHome && len < 2)){
+      this.setState({
+        isHome: !isHome
+      })
+    }
+    this.setTimeout(this.checkPathname, 100)
   }
 
   async componentDidMount() {
+    this.setTimeout(this.checkPathname, 100)
+    window.addEventListener('resize', this.updateDimensions)
     this.request('v1/images')
       .then(res => {
         if (res.success) {
@@ -149,7 +193,11 @@ export default class App extends Common {
       }
     }
 
-    return <div><BrowserRouter>
+    return <div className={this.state.isHome ? 'underRoot' : ''}
+      style={this.state.isHome ? {
+        height: this.state.height
+      } : {}}
+    ><BrowserRouter>
       <div className="contenitore">
         <div className="row">
           <div className="column leftColumn">
