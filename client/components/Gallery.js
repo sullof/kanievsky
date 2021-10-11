@@ -6,19 +6,16 @@ const masonryOptions = {
   transitionDuration: 0
 }
 
-const imagesLoadedOptions = { background: '.my-bg-image-el' }
+const imagesLoadedOptions = {background: '.my-bg-image-el'}
 
 class Gallery extends Base {
 
   constructor(props) {
     super(props)
 
-    this.state = {
-    }
+    this.state = {}
 
-    this.bindMany([
-
-    ])
+    this.bindMany([])
 
   }
 
@@ -30,7 +27,7 @@ class Gallery extends Base {
       caption = caption.slice(1)
       let rows = []
       for (let row of caption) {
-        rows.push(<div className={'underTitle'} key={'key'+ Math.random()}>
+        rows.push(<div className={'underTitle'} key={'key' + Math.random()}>
           {row}
         </div>)
       }
@@ -40,16 +37,23 @@ class Gallery extends Base {
           <div className="card">
             {
               this.Store.isAdminMode
-                ? <Scroll.Link to={'topcontenitore'} smooth={true} duration={250} containerId="contenitore"><div className={'editButton command'} onClick={() => this.props.editPicture(element.id)}>
-                  <i className="fa-solid fa-pen-to-square"/>
-                </div></Scroll.Link>
+                ? <Scroll.Link to={'topcontenitore'} smooth={true} duration={250} containerId="contenitore">
+                  <div className={'editButton command'} onClick={() => this.props.editPicture(element.id)}>
+                    <i className="fa-solid fa-pen-to-square"/>
+                  </div>
+                </Scroll.Link>
                 : null
             }
 
             <div className={'picture'}><img src={`/images/small/${element.src}`} alt={caption[0]}/></div>
             <div className={'caption'}>
               <b>{title}</b>
-              {rows}
+              {rows
+                ? <div className={'specsBlock'}>
+                  <div className={'specs'}>{rows}</div>
+                </div>
+                : null
+              }
             </div>
           </div>
         </li>

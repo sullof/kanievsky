@@ -240,7 +240,7 @@ p {
 .menu {
     display: none;
     margin-top: 20px;
-    /*font-style: italic;*/
+    font-size: 1.8rem;
     text-align: right;
 }
 
@@ -284,7 +284,7 @@ p {
     }
 
     .menu .selected {
-        border-left: 14px solid #eee;
+        border-left: 14px solid #eaf;
         font-weight: 700;
     }
 
@@ -368,6 +368,15 @@ p {
 .caption {
     margin-top: 8px;
     margin-bottom: -6px;
+    font-size: 1.3rem;
+}
+
+.caption .specsBlock {
+    margin-top: 2px;
+}
+
+.caption .specs {
+    line-height: 1.7rem;
 }
 
 .editButton {
@@ -405,7 +414,7 @@ button.cancel {
 
 .newSection {
     margin-top: 12px !important;
-    font-size: 90%;
+    font-size: 80%;
     color: darkmagenta;
 }
 
