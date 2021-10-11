@@ -1,50 +1,28 @@
 const path = require('path')
 const fs = require('./fs')
 const Images = require('./Images')
-const multer = require('multer')
 
 const uploadDir = path.resolve(__dirname, '../../tmp/uploads')
 fs.ensureDir(uploadDir)
 
-function upload(req, res) {
+async function upload(req, res) {
+  let filename
+  let {data, mimetype, name} = ((req.files || {}).file || {})
+  if (name) {
+    filename = path.join(uploadDir, Date.now() + '-' + name.replace(/\.\w+$/, '') + '.' + mimetype.split('/')[1])
+    await fs.writeFile(filename, data)
+  }
+  const images = new Images()
+  const what = req.query.what
+  const caption = req.query.caption
+  const id = req.query.id
 
-  let pictureName
-  const images = new Images(req.levelDb)
+  const newImage = await images.add(what, caption, filename ? path.basename(filename) : '', id)
 
-  multer({
-    storage: multer.diskStorage({
-      destination: function (req, file, cb) {
-        cb(null, uploadDir)
-      },
-      filename: function (req, file, cb) {
-        pictureName = Date.now() + '-' + file.originalname
-        cb(null, pictureName)
-      }
-    })
-  }).array('file')(req, res, async err => {
-    if (err instanceof multer.MulterError) {
-      return res.status(500).json({
-        success: false,
-        message: 'Server side error'
-      })
-    } else if (err) {
-      return res.status(500).json({
-        success: false,
-        message: 'Unknown error'
-      })
-    } else {
-
-      const what = req.query.what
-      const caption = req.query.caption
-
-      const newImage = await images.add(what, caption, pictureName)
-
-      return res.status(200).json({
-        success: true,
-        newImage,
-        what
-      })
-    }
+  return res.status(200).json({
+    success: true,
+    newImage,
+    what
   })
 }
 

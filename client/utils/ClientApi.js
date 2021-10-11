@@ -8,7 +8,6 @@ class ClientApi {
     headers = {},
     params = {}
     ) {
-
     params = Object.assign({
       url: `${window.location.origin}/api/${api}`,
       method,

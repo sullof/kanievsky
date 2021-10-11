@@ -1,5 +1,6 @@
 const {sha3, toBase64} = require('./utils')
 const crypto = require('crypto')
+const jsondb = require('./jsondb')
 
 class Auth {
 
@@ -13,9 +14,9 @@ class Auth {
 
   async exist(user) {
     let yes = false
-    let key = 'user:' + user.toLowerCase()
+    let users = jsondb.get('users')
     try {
-      yes = await this.db.get(key) ? true : false
+      yes = !!users[user.toLowerCase()]
     } catch (err) {
     }
     return yes
@@ -23,28 +24,12 @@ class Auth {
 
   async login(user, pwd) {
     if (this.good(user)) {
-      let key = 'user:' + user
-      pwd = sha3(pwd)
-      try {
-        if (pwd === await this.db.get(key)) {
+      let users = jsondb.get('users')
+      if (users[user]) {
+        if (sha3(pwd) === users[user].password) {
           return 0
         }
-      } catch (err) {
-      }
-      return 1
-    } else {
-      return 2
-    }
-  }
-
-  async signup(user, pwd) {
-    if (this.good(user)) {
-      let key = 'user:' + user
-      pwd = sha3(pwd)
-      try {
-        await this.db.put(key, pwd)
-        return 0
-      } catch (err) {
+      } else {
         return 1
       }
     } else {
@@ -52,18 +37,31 @@ class Auth {
     }
   }
 
+  async signup(user, pwd) {
+    if (this.good(user)) {
+      let users = jsondb.get('users')
+      users[user] = {
+        password: sha3(pwd)
+      }
+      jsondb.set(users)
+      return 0
+    } else {
+      return 2
+    }
+  }
+
   async getToken(user) {
-    let key = 'token:' + user
+    let tokens = jsondb.get('tokens') || {}
     let now = Date.now()
     let token
-    try {
-      token = (await this.db.get(key)).split(':')
+    if (tokens[user]) {
+      token = tokens[user].split(':')
       let ts = parseInt(token[2])
       if (ts > now) {
-        await this.db.del(key)
+        delete tokens[user]
+        jsondb.set(tokens)
         token = null
       }
-    } catch (err) {
     }
     return token
   }
@@ -73,19 +71,17 @@ class Auth {
   }
 
   async newToken(user) {
-    let key = 'token:' + user.toLowerCase()
+    let tokens = jsondb.get('tokens') || {}
+    user = user.toLowerCase()
     let token = [
       toBase64(user).replace(/=/g, '&'),
       crypto.randomBytes(8).toString('base64').substring(0, 4),
       (Date.now() + 1000 * 3600 * 24 * 10)
     ].join('$')
     token += '$' + sha3(token).substring(0,1)
-    try {
-      await this.db.put(key, token)
-      return token
-    } catch (err) {
-      return false
-    }
+    tokens[user] = token
+    jsondb.set(tokens)
+    return token
   }
 }
 

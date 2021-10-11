@@ -6,7 +6,7 @@ export default class Content extends Base {
   constructor(props) {
     super(props)
     this.state = {}
-    this.bindAll([
+    this.bindMany([
       'handleChange',
       'editPage',
       'saveChanges',
@@ -29,7 +29,7 @@ export default class Content extends Base {
     const previous = content[what]
     content[what] = this.state.text
     editing[what] = null
-    const res = await this.request('v1/save', 'post', null, {
+    const res = await this.request('v1/save', 'post', undefined, {
       data: {
         what,
         content: content[what]
@@ -37,7 +37,7 @@ export default class Content extends Base {
     })
     if (res && res.success) {
       temp[what] = null
-      this.store({
+      this.setStore({
         editing,
         content,
         temp
@@ -45,7 +45,7 @@ export default class Content extends Base {
     } else {
       temp[what] = null
       content[what] = previous
-      this.store({
+      this.setStore({
         editing,
         content,
         temp
@@ -57,7 +57,7 @@ export default class Content extends Base {
     const {editing, temp, what} = this.getData()
     editing[what] = null
     temp[what] = null
-    this.store({
+    this.setStore({
       editing,
       temp
     })
@@ -70,7 +70,7 @@ export default class Content extends Base {
     if (this.state.text) {
       const {temp, what} = this.getData()
       temp[what] = this.state.text
-      this.store({
+      this.setStore({
         temp
       })
     }
@@ -80,7 +80,7 @@ export default class Content extends Base {
     const {editing, content, temp, what} = this.getData()
     editing[what] = true
     temp[what] = content[what]
-    this.store({
+    this.setStore({
       editing,
       temp
     })

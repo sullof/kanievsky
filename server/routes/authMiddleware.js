@@ -1,9 +1,9 @@
 const Auth = require('../lib/Auth')
 
 module.exports = (req, res, next) => {
-  const auth = new Auth(req.levelDb)
+  const auth = new Auth()
   const accessToken = req.get('Access-Token')
-  if (auth.checkToken(accessToken)) {
+  if (accessToken && auth.checkToken(accessToken)) {
     next()
   } else {
     res.status(401).json({

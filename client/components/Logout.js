@@ -10,7 +10,7 @@ export default class Logout extends Base {
   }
 
   componentDidMount () {
-    this.store({
+    this.setStore({
       accessToken: null
     }, true)
   }

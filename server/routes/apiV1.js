@@ -2,15 +2,15 @@ const express = require('express')
 const router = express.Router()
 const Auth = require('../lib/Auth')
 const Images = require('../lib/Images')
-
-const multer = require('multer')
 const upload = require('../lib/upload')
+const jsondb = require('../lib/jsondb')
+const authMiddleware = require('./authMiddleware')
 
 router.post('/login', async (req, res) => {
   const {user, pwd} = req.body
 
   try {
-    const auth = new Auth(req.levelDb)
+    const auth = new Auth()
     const is = await auth.login(user, pwd)
     if (is === 0) {
       let accessToken = await auth.getToken(user)
@@ -39,7 +39,7 @@ router.post('/login', async (req, res) => {
 router.get('/images', async (req, res) => {
 
   try {
-    const images = new Images(req.levelDb)
+    const images = new Images()
     const list = await images.list()
     res.json({
       success: true,
@@ -56,13 +56,9 @@ router.get('/images', async (req, res) => {
 
 router.get('/content', async (req, res) => {
   let content = {}
+  const info = jsondb.get('info')
   for (let what of req.query.what) {
-    try {
-      let doc = await req.levelDb.get(`content:${what}`)
-      content[what] = doc || '--'
-    } catch (e) {
-      content[what] = '--'
-    }
+    content[what] = info[what] || '--'
   }
   res.json({
     success: true,
@@ -70,36 +66,34 @@ router.get('/content', async (req, res) => {
   })
 })
 
-router.post('/save', async (req, res) => {
+router.post('/save', authMiddleware, async (req, res) => {
   const {what, content} = req.body
-  await req.levelDb.put(`content:${what}`, content)
+  const info = jsondb.get('info')
+  info[what] = content
+  jsondb.set('info', info)
   res.json({
     success: true
   })
 })
 
-router.post('/upload', function(req, res) {
-
-  upload(req, res)
+router.post('/upload', authMiddleware, async function(req, res) {
+  return upload(req, res)
 })
 
-router.get('/delete', async function(req, res) {
+router.delete('/delete', authMiddleware, async function(req, res) {
 
-  const images = new Images(req.levelDb)
-  const {what, indexes} = req.query
+  const images = new Images()
+  const {id} = req.query
   res.json({
-    success: true,
-    images: await images.del(what, indexes)
+    success: await images.del(id)
   })
 })
 
-router.get('/caption', async function(req, res) {
+router.post('/new-section', authMiddleware, async function(req, res) {
 
-  const images = new Images(req.levelDb)
-  const {what, thumbnail, caption} = req.query
+  const images = new Images()
   res.json({
-    success: true,
-    images: await images.caption(what, thumbnail, caption)
+    success: await images.newSection(req.body.section)
   })
 })
 

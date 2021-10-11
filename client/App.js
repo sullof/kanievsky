@@ -1,4 +1,6 @@
 import qs from 'qs'
+import * as Scroll from 'react-scroll'
+
 const {BrowserRouter, Route} = ReactRouterDOM
 
 import ls from 'local-storage'
@@ -84,11 +86,13 @@ export default class App extends Common {
 
   render() {
 
+    const setStore = this.setStore
+
     const home = () => {
       return (
         <Home
           Store={this.state.Store}
-          setStore={this.setStore}
+          setStore={setStore}
         />
       )
     }
@@ -98,7 +102,7 @@ export default class App extends Common {
         return (
           <Works
             Store={this.state.Store}
-            setStore={this.setStore}
+            setStore={setStore}
             what={what}
           />
         )
@@ -111,7 +115,7 @@ export default class App extends Common {
         return (
           <Content
             Store={this.state.Store}
-            setStore={this.setStore}
+            setStore={setStore}
             what={what}
           />
         )
@@ -122,7 +126,7 @@ export default class App extends Common {
       return (
         <Login
           Store={this.state.Store}
-          setStore={this.setStore}
+          setStore={setStore}
         />
       )
     }
@@ -131,61 +135,62 @@ export default class App extends Common {
       return (
         <Logout
           Store={this.state.Store}
-          setStore={this.setStore}
+          setStore={setStore}
         />
       )
     }
 
-    return <BrowserRouter>
-      <div className="container">
+    const rows = []
+    if (this.state.Store && this.state.Store.images) {
+      for (let what in this.state.Store.images) {
+        rows.push(<Route key={'route' + Math.random()}
+                         exact path={'/works/' + what}
+                         component={works(what)}/>)
+      }
+    }
+
+    return <div><BrowserRouter>
+      <div className="contenitore">
         <div className="row">
-          <div className="column">
-            <div className="menu-trigger only-mobile" onClick={() => this.setStore({menuVisibility: !this.state.Store.menuVisibility})}>
-              <i className="fas fa-bars"></i></div>
+          <div className="column leftColumn">
+            <div className="menu-trigger only-mobile"
+                 onClick={() => setStore({menuVisibility: !this.state.Store.menuVisibility})}>
+              <i className="fas fa-bars"/></div>
             <Logo/>
             <Menu
               Store={this.state.Store}
-              setStore={this.setStore}
+              setStore={setStore}
             />
-            <Footer/>
+
           </div>
           <div className="column column-100 only-mobile">
             <Route exact path="/" component={home}/>
             <Route exact path="/bio" component={content('bio')}/>
             <Route exact path="/news" component={content('news')}/>
-            {
-              this.state.Store.images ? <div>
-                  <Route exact path="/works/paintings" component={works('paintings')}/>
-                  <Route exact path="/works/sculptures" component={works('sculptures')}/>
-                  <Route exact path="/works/drawings" component={works('drawings')}/>
-                </div>
-                : <div/>
-            }
+            {rows}
             <Route exact path="/contacts" component={content('contacts')}/>
             <Route exact path="/login" component={login}/>
             <Route exact path="/logout" component={logout}/>
           </div>
-          <div className="column column-80 only-desktop">
-            <Route exact path="/" component={home}/>
-            <Route exact path="/bio" component={content('bio')}/>
-            <Route exact path="/news" component={content('news')}/>
-            {
-              this.state.Store.images ? <div>
-                  <Route exact path="/works/paintings" component={works('paintings')}/>
-                  <Route exact path="/works/sculptures" component={works('sculptures')}/>
-                  <Route exact path="/works/drawings" component={works('drawings')}/>
-                </div>
-                : <div/>
-            }
-            <Route exact path="/contacts" component={content('contacts')}/>
-            <Route exact path="/login" component={login}/>
-            <Route exact path="/logout" component={logout}/>
+          <div id="contenitore" className="column column-80 only-desktop wrapper">
+            <Scroll.Element name={'topcontenitore'}/>
+            <div className={'extraPadding '}>
+              <Route exact path="/" component={home}/>
+              <Route exact path="/bio" component={content('bio')}/>
+              <Route exact path="/news" component={content('news')}/>
+              {rows}
+              <Route exact path="/contacts" component={content('contacts')}/>
+              <Route exact path="/login" component={login}/>
+              <Route exact path="/logout" component={logout}/>
+            </div>
           </div>
           <Footer
-          mobile={true}
+            mobile={true}
           />
         </div>
+        <Footer/>
       </div>
     </BrowserRouter>
+    </div>
   }
 }

@@ -11,9 +11,11 @@ export default class Login extends Base {
       user: '',
       pwd: ''
     }
-    this.userHandler = this.userHandler.bind(this)
-    this.pwdHandler = this.pwdHandler.bind(this)
-    this.submitHandler = this.submitHandler.bind(this)
+    this.bindMany([
+      'userHandler',
+      'pwdHandler',
+      'submitHandler'
+    ])
   }
 
 
@@ -31,16 +33,17 @@ export default class Login extends Base {
 
   async submitHandler(event) {
     event.preventDefault()
-    const res = await this.request('v1/login', 'post', null, {
+    const res = await this.request('v1/login', 'post', undefined, {
       data: {
         user: this.state.user,
         pwd: this.state.pwd
       }
     })
     if (res && res.success) {
-      this.store({
+      this.setStore({
         accessToken: res.accessToken
       }, true)
+
     }
   }
 

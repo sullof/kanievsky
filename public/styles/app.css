@@ -1,9 +1,11 @@
+@import './dropzone.css';
+
 html, body {
-    background-color: #f8f8f8;
+    background-color: whitesmoke;
 }
 
 div, p, span {
-    font-family: 'Lato', sans-serif;
+    font-family: 'Arimo', sans-serif;
 }
 
 a {
@@ -17,12 +19,10 @@ a:hover {
 
 .logo {
     color: black;
-    font-size: 130%;
+    font-size: 3rem;
+    font-weight: 700;
     margin-bottom: 8px;
-}
-
-.container {
-    padding: 2.0rem;
+    line-height: 3rem;
 }
 
 .social {
@@ -31,6 +31,7 @@ a:hover {
 
 .copyright {
     font-size: 80%;
+    padding-left: 6px;
 }
 
 
@@ -46,13 +47,22 @@ a:hover {
 
 .menu .selected a {
     color: black;
-    font-weight: 400;
-    font-style: normal;
 }
 
 .menu .first-in-block {
     margin-top: 12px;
 }
+
+.menu a:hover {
+    color: silver;
+    background: transparent;
+}
+
+.menu .selected a:hover {
+    color: black;
+    cursor: default;
+}
+
 
 .ReactGridGallery_tile {
     width: 100% !important;
@@ -78,23 +88,29 @@ a:hover {
 }
 
 .admin a {
-    font-style: normal;
+    /*font-style: normal;*/
 }
 
 .form-group {
     padding: 20px;
-    border-radius: 8px;
-    border: 1px solid #eee;
     margin-left: 13px;
     width: 92%;
+}
+
+.form-group textarea {
+    height: 80px;
 }
 
 .clearBoth {
     clear: both;
 }
 
-input {
+input, textarea {
     background-color: white !important;
+}
+
+textarea::placeholder {
+    color: silver;
 }
 
 .files input.form-control {
@@ -201,7 +217,7 @@ p {
 .menu {
     display: none;
     margin-top: 20px;
-    font-style: italic;
+    /*font-style: italic;*/
     text-align: right;
 }
 
@@ -245,7 +261,8 @@ p {
     }
 
     .menu .selected {
-        border-left: 4px solid #eee;
+        border-left: 14px solid #eee;
+        font-weight: 700;
     }
 
     .only-mobile {
@@ -256,10 +273,16 @@ p {
         display: block !important;
     }
 
+    .footer.only-desktop {
+        position: absolute;
+        bottom: 18px;
+        left: 18px;
+    }
+
     .menu {
         display: block;
-        margin-top: 20px;
-        font-style: italic;
+        margin-top: 70px;
+        /*font-style: italic;*/
         text-align: left;
     }
 
@@ -270,7 +293,7 @@ p {
     .menu hr {
         display: block;
         margin: 16px 50% 16px 0;
-        border: 1px dashed #ddd;
+        border-color: transparent;
     }
 
     .footer.mobile {
@@ -282,4 +305,79 @@ p {
         display: block;
     }
 
+    .logo {
+        margin-top: 24px;
+    }
+
+}
+
+.card {
+    width: 360px;
+}
+
+.wrapper {
+    position: relative;
+    overflow: auto;
+    max-height: 100vh;
+}
+
+.leftColumn {
+    margin-top: 20px;
+    padding: 0 3rem 0 5rem !important;
+
+}
+
+.image-element-class {
+    list-style-type: none;
+    border: 1px solid #eeeeee;
+    border-radius: 2px;
+    padding: 2rem;
+    margin-left: 6px;
+    margin-right: 6px;
+    background: white;
+}
+
+.extraPadding {
+    padding-top: 44px !important;
+    padding-bottom: 24px !important;
+}
+
+.caption {
+    margin-top: 8px;
+    margin-bottom: -6px;
+}
+
+.editButton {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    border-radius: 100px;
+    padding: 8px;
+    background-color: rgba(0,0,0,.2);
+    color: white;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+}
+
+.command {
+    cursor: pointer;
+}
+
+button.cancel {
+    background-color: crimson;
+}
+
+.floatRight {
+    float: right;
+}
+
+.mt120 {
+    margin-top: 120px;
+}
+
+.newSection {
+    margin-top: 12px !important;
+    font-size: 90%;
+    color: darkmagenta;
 }

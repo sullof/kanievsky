@@ -17,7 +17,7 @@ export default class PrimaryContent extends Base {
           </a>
         </div>
         <div className="copyright">
-          &copy; 2019 Gael Kanievsky
+          &copy; {(new Date).getFullYear()} Gael Kanievsky
         </div>
       </div>
     )

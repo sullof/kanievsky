@@ -1,6 +1,7 @@
 const path = require('path')
 const fs = require('./fs')
-const Jimp = require('jimp')
+const sharp = require('sharp')
+const jsondb = require('../lib/jsondb')
 
 const uploadDir = path.resolve(__dirname, '../../tmp/uploads')
 const largeDir = path.resolve(__dirname, '../../public/images/large')
@@ -12,90 +13,85 @@ fs.ensureDir(smallDir)
 
 class Images {
 
-  constructor(db) {
-    this.db = db
-  }
-
   async list() {
     let images
     try {
-      images = JSON.parse(await this.db.get('images'))
+      images = await jsondb.get('images')
     } catch (e) {
     }
     return images
   }
 
-  async add(what, caption, pictureName) {
-
-    const origin = path.join(uploadDir, pictureName)
-    let dest = path.join(largeDir, pictureName)
-
-    await fs.copyAsync(origin, dest)
-    let image = await Jimp.read(origin)
-    const width = image.bitmap.width
-    const height = image.bitmap.height
-
-    let x, y, min
-    if (width < height) {
-      min = width
-      x = 0
-      y = Math.round((height - width) / 2)
-    } else {
-      min = height
-      x = Math.round((width - height) / 2)
-      y = 0
-    }
-
-    await image.crop(x, y, min, min)
-    await image.resize(180, 180)
-    await image.writeAsync(path.join(smallDir, pictureName))
+  async add(what, caption, pictureName, id) {
 
     const list = await this.list()
     if (!list[what]) {
       list[what] = []
     }
-    const newImage = {
-      src: `/images/large/${pictureName}`,
-      thumbnail: `/images/small/${pictureName}`,
-      thumbnailWidth: 180,
-      thumbnailHeight: 180,
-      caption
+
+    const origin = path.join(uploadDir, pictureName || '')
+    let dest = path.join(largeDir, pictureName || '')
+    if (pictureName) {
+      await fs.copyAsync(origin, dest)
+      await sharp(origin)
+        .resize({width: 400})
+        .toFile(path.join(smallDir, pictureName))
     }
-
-    list[what].push(newImage)
-    await this.db.put('images', JSON.stringify(list))
-
+    let newImage
+    if (id) {
+      for (let img of list[what]) {
+        if (img.id === parseInt(id)) {
+          if (pictureName) {
+            img.src = pictureName
+          }
+          img.caption = caption
+          newImage = img
+          break
+        }
+      }
+    }
+    if (!newImage && pictureName) {
+      let lastId = jsondb.get('lastId')
+      newImage = {
+        src: pictureName,
+        caption,
+        id: ++lastId
+      }
+      jsondb.set('lastId', lastId)
+      list[what].splice(0, 0, newImage)
+    }
+    if (newImage) {
+      await jsondb.set('images', list)
+    }
     return newImage
   }
 
-  async caption(what, thumbnail, caption) {
-    let images = await this.list()
-    let original = images[what]
-    for (let i = 0; i < original.length; i++) {
-      if (original[i].thumbnail === thumbnail) {
-        original[i].caption = caption
-      }
+  async newSection(section) {
+    section = section.toLowerCase()
+    let list = await this.list()
+    if (!list[section]) {
+      list[section] = []
+      jsondb.set('images', list)
+      return true
     }
-    await this.db.put('images', JSON.stringify(images))
-    return images
+    return false
   }
 
-  async del(what, indexes) {
-    indexes = indexes.map(e => parseInt(e))
-    let images = await this.list()
-    let original = images[what]
-    let changes = []
-    for (let i = 0; i < original.length; i++) {
-      if (!indexes.includes(i)) {
-        changes.push(original[i])
-      } else {
-        fs.unlink(path.join(largeDir, original[i].src.split('/')[3]))
-        fs.unlink(path.join(smallDir, original[i].src.split('/')[3]))
+  async del(id) {
+    let list = await this.list()
+    for (let key in list) {
+      for (let i=0;i<list[key].length;i++) {
+        let image = list[key][i]
+        if (image.id === parseInt(id)) {
+          fs.unlink(path.join(largeDir, image.src))
+          fs.unlink(path.join(smallDir, image.src))
+          list[key].splice(i, 1)
+          await jsondb.set('images', list)
+          return true
+        }
       }
     }
-    images[what] = changes
-    await this.db.put('images', JSON.stringify(images))
-    return images
+    return false
   }
 
 }

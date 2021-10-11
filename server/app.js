@@ -6,8 +6,7 @@ const apiV1 = require('./routes/apiV1')
 const Logger = require('./lib/Logger')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-
-const levelDb = require('./lib/db')
+const fileUpload = require('express-fileupload')
 
 process.on('uncaughtException', function (error) {
 
@@ -29,15 +28,14 @@ function getIndex() {
 
 const app = express()
 
-app.use((req, res, next) => {
-  req.levelDb = levelDb
-  next()
-})
-
 app.use(cors())
 app.use(cookieParser())
-app.use(bodyParser.json())
+app.use(bodyParser.json({limit: '10mb'}))
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}))
+
+app.use(fileUpload({
+  limits: { fileSize: 50 * 1024 * 1024 },
+}))
 
 app.use('/api/v1', apiV1)
 
@@ -45,18 +43,8 @@ app.use('/index.html', function (req, res) {
   res.redirect('/')
 })
 
-app.post('/upload', (req, res, next) => {
-  let imageFile = req.files.file
-
-  imageFile.mv(`${__dirname}/public/works/${req.body.filename}.jpg`, function(err) {
-    if (err) {
-      return res.status(500).send(err)
-    }
-
-    res.json({file: `public/works/${req.body.filename}.jpg`})
-  })
-
-})
+const tmpDir = path.resolve(__dirname, '../tmp/images')
+fs.ensureDirSync(tmpDir)
 
 app.use('/:anything', function (req, res, next) {
   let v = req.params.anything
@@ -110,7 +98,6 @@ app.use(function (err, req, res, next) {
 })
 
 process.on('SIGINT', () => {
-  levelDb.close()
   console.info('Db connection closed.')
   process.exit()
 })

@@ -6,15 +6,34 @@ class Base extends Common {
 
   constructor(props) {
     super(props)
-    this.bindAll([
-      'store',
-      'request'
+    this.bindMany([
+      'setStore',
+      'request',
+      'setTimeout',
+      'endTimeout'
     ])
     this.Store = this.props.Store
   }
 
-  store(...params) {
+  request(api, method, headers = {}, params = {}) {
+    if (this.Store && this.Store.accessToken) {
+      headers['Access-Token'] = this.Store.accessToken
+    }
+    return super.request(api, method, headers, params)
+  }
+
+  setStore(...params) {
     this.props.setStore(...params)
+  }
+
+  setTimeout(func, time) {
+    this.timerId = setTimeout(() => this.endTimeout(func), time)
+  }
+
+  endTimeout(func, time) {
+    clearTimeout(this.timerId)
+    this.timerId = null
+    func()
   }
 
   render() {
