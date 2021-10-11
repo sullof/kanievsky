@@ -11,7 +11,7 @@
   "author": "Francesco Sullo <francesco@sullo.co>",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.22.0",
+    "axios": "^0.21.2",
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
     "chalk": "^4.1.2",
