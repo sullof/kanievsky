@@ -376,6 +376,10 @@ button.cancel {
     margin-top: 120px;
 }
 
+.mt20 {
+    margin-top: 20px;
+}
+
 .newSection {
     margin-top: 12px !important;
     font-size: 90%;

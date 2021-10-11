@@ -128,11 +128,11 @@ export default class Menu extends Base {
             this.Store.accessToken
               ? <div>
                 <div className={this.isMe('/logout')}><Link onClick={this.setBack} to="/logout">Logout</Link></div>
-                <div>
+                <div className={'mt20'}>
                   {
                     this.Store.isAdminMode
-                      ? <a onClick={this.toggleAdminMode} style={{fontSize: '90%'}}>Exit admin mode</a>
-                      : <a onClick={this.toggleAdminMode} style={{fontSize: '90%'}}>Enter admin mode</a>
+                      ? <a onClick={this.toggleAdminMode} style={{fontSize: '90%', color: 'darkmagenta'}}>Exit admin mode</a>
+                      : <a onClick={this.toggleAdminMode} style={{fontSize: '90%', color: 'darkmagenta'}}>Enter admin mode</a>
 
                   }
                 </div>
