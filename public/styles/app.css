@@ -48,6 +48,10 @@ a:hover {
     color: white !important;
 }
 
+.underRoot .menu .selected a {
+    color: black !important;
+}
+
 .social {
 
 }
@@ -65,13 +69,15 @@ a:hover {
 }
 
 .menu .selected {
-    padding-left: 8px;
+    padding-left: 0;
+    margin-left: -14px;
 }
 
 .menu .selected a {
     color: black;
+    background-color: white;
+    padding: 6px 14px;
 }
-
 .menu .first-in-block {
     margin-top: 12px;
 }
@@ -284,7 +290,6 @@ p {
     }
 
     .menu .selected {
-        border-left: 14px solid #eaf;
         font-weight: 700;
     }
 
