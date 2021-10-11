@@ -29,6 +29,7 @@ yarn-error.log*
 /db
 /public/images/large
 /public/images/small
+/public/images/tmp
 /tmp
 *.env
 .scratch
