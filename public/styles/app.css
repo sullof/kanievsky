@@ -8,7 +8,6 @@ html, body {
 
 
 div.underRoot {
-
     background-image: url(../images/homebg.jpeg);
     background-repeat: no-repeat;
     background-position: center;
@@ -17,6 +16,16 @@ div.underRoot {
     -o-background-size: cover;
     background-size: cover;
     height:100%;
+
+    animation: fadeIn 2s;
+    -webkit-animation: fadeIn 2s;
+    -moz-animation: fadeIn 2s;
+    -o-animation: fadeIn 2s;
+
+    /*-webkit-transition: all .5s linear;*/
+    /*-moz-transition: all .5s linear;*/
+    /*-o-transition: all .5s linear;*/
+    /*transition: all .5s linear;*/
 }
 
 div, p, span {
@@ -87,11 +96,47 @@ a:hover {
     background: transparent;
 }
 
+.underRoot .menu a:hover {
+    color: #ddd !important;
+    /*background: transparent;*/
+}
+
+
 .menu .selected a:hover {
     color: black;
     cursor: default;
 }
 
+.underRoot .menu .selected a:hover {
+    color: #888 !important;
+    background-color: white;
+}
+
+
+@keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+
+@-moz-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+
+@-webkit-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+
+@-o-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+
+@-ms-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
 
 .ReactGridGallery_tile {
     width: 100% !important;
@@ -271,6 +316,20 @@ p {
 .only-desktop {
     display: none !important;
 }
+
+@media screen and (max-width: 800px) {
+    .image-element-class {
+        list-style-type: none;
+         border: none !important;
+        border-radius: 2px;
+        padding: 2rem;
+        /* margin-left: 6px; */
+        margin-right: 6px;
+         background: whitesmoke !important;
+    }
+
+}
+
 
 @media screen and (min-width: 40.0rem) {
 
