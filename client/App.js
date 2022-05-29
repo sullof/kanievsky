@@ -1,6 +1,6 @@
 import qs from 'qs'
 import * as Scroll from 'react-scroll'
-
+// eslint-disable-next-line no-undef
 const {BrowserRouter, Route} = ReactRouterDOM
 
 import ls from 'local-storage'
@@ -14,6 +14,7 @@ import Works from './components/Works'
 import Login from './components/Login'
 import Logout from './components/Logout'
 import Content from './components/Content'
+import PictureGallery from './components/PictureGallery';
 
 export default class App extends Common {
 
@@ -49,7 +50,7 @@ export default class App extends Common {
       'updateDimensions',
       'setTimeout',
       'endTimeout',
-      'checkPathname'
+      'checkPathname',
     ])
   }
 
@@ -153,7 +154,6 @@ export default class App extends Common {
       }
     }
 
-
     const content = (what) => {
       return () => {
         return (
@@ -239,6 +239,20 @@ export default class App extends Common {
         <Footer/>
       </div>
     </BrowserRouter>
+      {
+        this.state.Store.showGallery ? <PictureGallery
+          Store={this.state.Store}
+          setStore={setStore}
+          startIndex={this.state.Store.startIndex || 0}
+          items={this.state.Store.galleryElements.map(element => {
+            return {
+              original: `${window.location.origin}/images/large/${element.src}`,
+              thumbnail: `${window.location.origin}/images/small/${element.src}`,
+              description: element.caption.split('\n').map(e => _.trim(e))[0]
+            }
+          })}
+        /> : null
+      }
     </div>
   }
 }
