@@ -1,6 +1,7 @@
 import Masonry from 'react-masonry-component'
 import * as Scroll from 'react-scroll'
 import Base from './Base'
+import PictureGallery from './PictureGallery'
 
 const masonryOptions = {
   transitionDuration: 0
@@ -13,14 +14,32 @@ class Gallery extends Base {
   constructor(props) {
     super(props)
 
-    this.state = {}
+    this.state = {
+      show: false,
+      index: 0
+    }
 
-    this.bindMany([])
+    this.bindMany(['showGallery'])
 
   }
 
+  showGallery(startIndex) {
+    console.log(startIndex)
+    this.setStore({
+      galleryElements: this.props.elements,
+      showGallery: true,
+      startIndex
+    })
+  }
+
   render() {
-    const childElements = this.props.elements.map(element => {
+
+    const elements = this.props.elements
+    for (let i =0; i< elements.length; i++) {
+      elements[i].index = i
+    }
+
+    const childElements = elements.map(element => {
 
       let caption = element.caption.split('\n').map(e => _.trim(e))
       let title = caption[0]
@@ -45,7 +64,7 @@ class Gallery extends Base {
                 : null
             }
 
-            <div className={'picture'}><img src={`/images/small/${element.src}`} alt={caption[0]}/></div>
+            <div className={'picture'} onClick={() => this.showGallery(element.index)}><img src={`/images/small/${element.src}`} alt={caption[0]}/></div>
             <div className={'caption'}>
               <b>{title}</b>
               {rows
@@ -60,10 +79,10 @@ class Gallery extends Base {
       )
     })
 
-    if (this.props.elements.length) {
+    if (elements.length) {
 
       return (
-        <Masonry
+        <div><Masonry
           className={'my-gallery-class'} // default ''
           elementType={'ul'} // default 'div'
           options={masonryOptions} // default {}
@@ -73,6 +92,7 @@ class Gallery extends Base {
         >
           {childElements}
         </Masonry>
+        </div>
       )
     } else {
       return <div className={'mt120'}><h1>Whoops, this sections looks empty</h1></div>
