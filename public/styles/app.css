@@ -553,7 +553,7 @@ button.cancel {
         font-weight: bold;
     }
 
-    .footer {
+    .home .footer {
         position: absolute;
         bottom: 20px;
         left: 20px;
