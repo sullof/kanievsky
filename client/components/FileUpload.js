@@ -1,40 +1,51 @@
 // eslint-disable-next-line no-undef
 class FileUpload extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
-      imageURL: '',
-    }
+      imageURL: "",
+    };
 
-    this.handleUploadImage = this.handleUploadImage.bind(this)
+    this.handleUploadImage = this.handleUploadImage.bind(this);
   }
 
   handleUploadImage(ev) {
-    ev.preventDefault()
+    ev.preventDefault();
 
-    const data = new FormData()
-    data.append('file', this.uploadInput.files[0])
-    data.append('filename', this.fileName.value)
+    const data = new FormData();
+    data.append("file", this.uploadInput.files[0]);
+    data.append("filename", this.fileName.value);
 
-    fetch('http://localhost:8000/upload', {
-      method: 'POST',
+    fetch("http://localhost:8000/upload", {
+      method: "POST",
       body: data,
     }).then((response) => {
       response.json().then((body) => {
-        this.setState({ imageURL: `http://localhost:8000/${body.file}` })
-      })
-    })
+        this.setState({ imageURL: `http://localhost:8000/${body.file}` });
+      });
+    });
   }
 
   render() {
     return (
       <form onSubmit={this.handleUploadImage}>
         <div>
-          <input ref={(ref) => { this.uploadInput = ref }} type="file" />
+          <input
+            ref={(ref) => {
+              this.uploadInput = ref;
+            }}
+            type="file"
+          />
         </div>
         <div>
-          <input ref={(ref) => { this.fileName = ref }} type="text" placeholder="Enter the desired name of file" />
+          <input
+            ref={(ref) => {
+              this.fileName = ref;
+            }}
+            type="text"
+            placeholder="Enter the desired name of file"
+          />
         </div>
         <br />
         <div>
@@ -42,8 +53,8 @@ class FileUpload extends React.Component {
         </div>
         <img src={this.state.imageURL} alt="img" />
       </form>
-    )
+    );
   }
 }
 
-export default FileUpload
+export default FileUpload;

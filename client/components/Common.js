@@ -1,31 +1,29 @@
-import ls from 'local-storage'
-import clientApi  from '../utils/ClientApi'
+import ls from "local-storage";
+import clientApi from "../utils/ClientApi";
 
 // eslint-disable-next-line no-undef
 export default class Common extends React.Component {
-
   constructor(props) {
-    super(props)
+    super(props);
 
-    this.bindMany = this.bindMany.bind(this)
-    this.ls = ls
+    this.bindMany = this.bindMany.bind(this);
+    this.ls = ls;
   }
 
   request(api, method, headers = {}, params = {}) {
     // if (this.Store && this.Store.accessToken) {
     //   headers.accessToken = this.Store.accessToken
     // }
-    return clientApi.request(api, method, headers, params)
+    return clientApi.request(api, method, headers, params);
   }
 
   bindMany(methods) {
     for (let m of methods) {
-      this[m] = this[m].bind(this)
+      this[m] = this[m].bind(this);
     }
   }
 
   render() {
-    return <div/>
+    return <div />;
   }
 }
-

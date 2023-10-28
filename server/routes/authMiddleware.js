@@ -1,13 +1,13 @@
-const Auth = require('../lib/Auth')
+const Auth = require("../lib/Auth");
 
 module.exports = (req, res, next) => {
-  const auth = new Auth()
-  const accessToken = req.get('Access-Token')
+  const auth = new Auth();
+  const accessToken = req.get("Access-Token");
   if (accessToken && auth.checkToken(accessToken)) {
-    next()
+    next();
   } else {
     res.status(401).json({
-      message: 'Access not authorized.'
-    })
+      message: "Access not authorized.",
+    });
   }
-}
+};
