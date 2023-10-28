@@ -9,7 +9,7 @@ export default class Logo extends React.Component {
 
     let pathname
     let tmp = window.location.pathname.split("/");
-    if (isMobileOnly && ["works", "news"].includes(tmp[1])) {
+    if (isMobileOnly && ["works"].includes(tmp[1])) {
       pathname = <div className="pathname">{Case.capital(tmp.slice(1).join(" | "))}</div>
     }
 
