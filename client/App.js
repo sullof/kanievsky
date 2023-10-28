@@ -208,7 +208,7 @@ export default class App extends Common {
                 <Logo />
                 <Menu Store={this.state.Store} setStore={setStore} />
               </div>
-              <div className="column column-100 only-mobile">
+              <div className="column column-100 only-mobile mpadded">
                 <Route exact path="/" component={home} />
                 <Route exact path="/bio" component={content("bio")} />
                 <Route exact path="/news" component={content("news")} />
