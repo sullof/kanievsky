@@ -437,7 +437,6 @@ p {
 .card {
     width: 100%; /* Full width on mobile */
     box-sizing: border-box; /* Ensure padding/border are included in total width and height */
-    padding: 14px 10px; /* Add some padding inside the card */
     margin-bottom: 10px; /* Add some space between the cards */
 }
 
@@ -549,14 +548,19 @@ button.cancel {
         font-size: 12vw;
         /*margin-top: 100px;*/
         line-height: 4rem;
-        padding-left: 20px;
+        /*padding-left: 20px;*/
         font-weight: bold;
     }
 
+    .footer {
+        padding: 20px;
+    }
+
     .home .footer {
+        padding: 0;
         position: absolute;
         bottom: 20px;
-        left: 20px;
+        left: 10px;
     }
 
     .home .menu-trigger i {

@@ -7,13 +7,18 @@ export default class Logo extends React.Component {
 
   render() {
 
-    let pathname = window.location.pathname.substring(1).replace(/\//g, " | ");
+    let pathname
+    let tmp = window.location.pathname.split("/");
+    if (isMobileOnly && ["works", "news"].includes(tmp[1])) {
+      pathname = <div className="pathname">{Case.capital(tmp.slice(1).join(" | "))}</div>
+    }
+
 
     return (
       <div className="logo">
         GAEL <br className="only-desktop" />
         KANIEVSKY
-        {isMobileOnly ?  <div className="pathname">{Case.capital(pathname)}</div> : null}
+        {pathname}
       </div>
     );
   }
