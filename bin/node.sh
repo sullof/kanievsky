@@ -9,7 +9,7 @@ docker run -d \
   --name kanievsky \
   -p 1965 \
   -v $PWD:/usr/src/app \
-  -e VIRTUAL_HOST=kanievsky.com,www.kanievsky.com \
-  -e LETSENCRYPT_HOST=kanievsky.com,www.kanievsky.com \
+  -e VIRTUAL_HOST=kanievsky.com,www.kanievsky.com,gaelkanievsky.com,www.gaelkanievsky.com \
+  -e LETSENCRYPT_HOST=kanievsky.com,www.kanievsky.com,gaelkanievsky.com,www.gaelkanievsky.com \
   -e LETSENCRYPT_EMAIL=admin@kanievsky.com \
-  -w /usr/src/app node:22 npm run start
+  -w /usr/src/app node:20 npm run start
