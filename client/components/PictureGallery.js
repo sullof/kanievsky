@@ -1,5 +1,6 @@
 // eslint-disable react/prop-types
-import ImageGallery from "react-image-gallery";
+import Lightbox from "react-18-image-lightbox";
+import "react-18-image-lightbox/style.css";
 import Base from "./Base";
 
 // eslint-disable-next-line no-undef
@@ -7,22 +8,8 @@ export default class PictureGallery extends Base {
   constructor(props) {
     super(props);
     this.state = {
-      showIndex: false,
-      showBullets: true,
-      infinite: true,
-      showThumbnails: false,
-      showFullscreenButton: true,
-      showGalleryFullscreenButton: true,
-      showPlayButton: true,
-      showGalleryPlayButton: true,
-      showNav: true,
-      isRTL: false,
-      slideDuration: 450,
-      slideInterval: 2000,
-      slideOnThumbnailOver: false,
-      thumbnailPosition: "bottom",
-      showVideo: {},
-      useWindowKeyDown: true,
+      photoIndex: this.props.startIndex || 0,
+      isOpen: true,
     };
 
     this.bindMany([]);
@@ -41,6 +28,10 @@ export default class PictureGallery extends Base {
     console.debug("loaded image", event.target.src);
   }
 
+  _onImageError(event) {
+    console.error("failed to load image", event.target.src);
+  }
+
   _onScreenChange(fullScreenElement) {
     console.debug("isFullScreen?", !!fullScreenElement);
   }
@@ -56,37 +47,32 @@ export default class PictureGallery extends Base {
   }
 
   render() {
-    return (
-      <div>
-        <div className={"closeButton"}>
-          <div onClick={() => this.setStore({ showGallery: false })}>
-            <i className="fa-solid fa-rectangle-xmark" />
-          </div>
-        </div>
+    const { photoIndex, isOpen } = this.state;
+    const images = this.props.items.map(item => item.original);
 
-        <ImageGallery
-          startIndex={this.props.startIndex}
-          items={this.props.items}
-          ref={(i) => (this._imageGallery = i)}
-          onClick={this._onImageClick.bind(this)}
-          onImageLoad={this._onImageLoad}
-          onScreenChange={this._onScreenChange.bind(this)}
-          infinite={this.state.infinite}
-          showBullets={this.state.showBullets}
-          showFullscreenButton={
-            this.state.showFullscreenButton &&
-            this.state.showGalleryFullscreenButton
-          }
-          showPlayButton={
-            this.state.showPlayButton && this.state.showGalleryPlayButton
-          }
-          showThumbnails={this.state.showThumbnails}
-          showIndex={this.state.showIndex}
-          showNav={this.state.showNav}
-          additionalClass="app-image-gallery"
-          useWindowKeyDown={this.state.useWindowKeyDown}
-        />
-      </div>
+    return (
+      <>
+        {isOpen && (
+          <Lightbox
+            mainSrc={images[photoIndex]}
+            nextSrc={images[(photoIndex + 1) % images.length]}
+            prevSrc={images[(photoIndex + images.length - 1) % images.length]}
+            onCloseRequest={() => this.setStore({ showGallery: false })}
+            onMovePrevRequest={() =>
+              this.setState({
+                photoIndex: (photoIndex + images.length - 1) % images.length,
+              })
+            }
+            onMoveNextRequest={() =>
+              this.setState({
+                photoIndex: (photoIndex + 1) % images.length,
+              })
+            }
+            imageTitle={this.props.items[photoIndex]?.description || ''}
+            imageCaption={this.props.items[photoIndex]?.description || ''}
+          />
+        )}
+      </>
     );
   }
 }

@@ -1,29 +1,31 @@
-var path = require("path");
-var webpack = require("webpack");
+const path = require("path");
+const webpack = require("webpack");
 
 module.exports = {
-  devtool: "cheap-module-eval-source-map",
+  mode: "production",
+  devtool: "source-map",
   entry: "./client/index.js",
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
-        loaders: ["babel-loader"],
+        use: ["babel-loader"],
         exclude: /node_modules/,
       },
       {
-        test: /\.scss/,
-        loader: "style-loader!css-loader!sass-loader",
-      },
-      {
-        test: "/.css$/",
-        loader: "style!css!",
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
       },
     ],
   },
   output: {
-    path: path.join(__dirname, "public"),
+    path: path.join(__dirname, "public/dist"),
     filename: "bundle.min.js",
+    clean: true,
   },
-  plugins: [new webpack.optimize.OccurrenceOrderPlugin()],
+  plugins: [
+    new webpack.DefinePlugin({
+      "process.env.NODE_ENV": JSON.stringify("production"),
+    }),
+  ],
 };
