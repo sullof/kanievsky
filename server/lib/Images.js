@@ -1,6 +1,6 @@
 const path = require("path");
 const fs = require("./fs");
-const sharp = require("sharp");
+const Jimp = require("jimp");
 const jsondb = require("../lib/jsondb");
 
 const uploadDir = path.resolve(__dirname, "../../tmp/uploads");
@@ -30,9 +30,10 @@ class Images {
     let dest = path.join(largeDir, pictureName || "");
     if (pictureName) {
       await fs.copyAsync(origin, dest);
-      await sharp(origin)
-        .resize({ width: 400 })
-        .toFile(path.join(smallDir, pictureName));
+      const image = await Jimp.read(origin);
+      await image
+        .resize(400, Jimp.AUTO)
+        .writeAsync(path.join(smallDir, pictureName));
     }
     let newImage;
     if (id) {

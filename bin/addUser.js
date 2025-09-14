@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 const Auth = require("../server/lib/Auth");
-const db = require("../server/lib/db");
-const auth = new Auth(db);
+const auth = new Auth();
 
 const program = require("commander");
 
@@ -30,7 +29,6 @@ async function go(user, pwd) {
       console.info("Wrong format for username");
     }
   }
-  db.close();
 }
 
 if (program.user && program.pwd) {

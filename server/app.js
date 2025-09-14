@@ -27,6 +27,7 @@ function getIndex() {
     // Read Vite manifest to get correct asset URLs
     try {
       const manifestPath = path.resolve(__dirname, "../public/dist/.vite/manifest.json");
+      
       if (fs.existsSync(manifestPath)) {
         const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf-8"));
         const entry = manifest["client/index.html"];
@@ -69,8 +70,18 @@ app.use("/index.html", function (req, res) {
   res.redirect("/");
 });
 
+// Serve the main index.html for root path
+app.get("/", function (req, res) {
+  res.send(getIndex());
+});
+
 const tmpDir = path.resolve(__dirname, "../tmp/images");
 fs.ensureDirSync(tmpDir);
+
+// Serve static files first, but exclude index.html
+app.use(express.static(path.resolve(__dirname, "../public"), {
+  index: false // Don't serve index.html automatically
+}));
 
 app.use("/:anything", function (req, res, next) {
   let v = req.params.anything;
@@ -87,8 +98,6 @@ app.use("/:anything", function (req, res, next) {
       res.send(getIndex());
   }
 });
-
-app.use(express.static(path.resolve(__dirname, "../public")));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

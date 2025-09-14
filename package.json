@@ -36,7 +36,7 @@
     "react-router-dom": "^6.8.0",
     "react-scroll": "^1.9.0",
     "sha3": "^2.1.4",
-    "sharp": "^0.32.6",
+    "jimp": "^0.22.10",
     "simple-json-db": "^2.0.0"
   },
   "devDependencies": {
