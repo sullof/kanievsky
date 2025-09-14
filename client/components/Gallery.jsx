@@ -1,6 +1,5 @@
-import React from "react";
 import * as Scroll from "react-scroll";
-import Base from "./Base.jsx";
+import Base from "./Base";
 import { isMobileOnly } from "react-device-detect";
 
 class Gallery extends Base {

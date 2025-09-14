@@ -1,6 +1,7 @@
-import React from "react";
-import Base from "./Base.jsx";
-import { Navigate } from "react-router-dom";
+import Base from "./Base";
+
+// eslint-disable-next-line no-undef
+const { Redirect } = ReactRouterDOM;
 
 export default class Logout extends Base {
   constructor(props) {
@@ -11,6 +12,7 @@ export default class Logout extends Base {
     this.setStore(
       {
         accessToken: null,
+        isAdminMode: false,
       },
       true
     );
@@ -18,7 +20,7 @@ export default class Logout extends Base {
 
   render() {
     if (!this.Store.accessToken) {
-      return <Navigate to={this.Store.lastPath} />;
+      return <Redirect to={this.Store.lastPath} />;
     }
 
     return <div />;

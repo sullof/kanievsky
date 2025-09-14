@@ -1,6 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import Base from "./Base.jsx";
+// eslint-disable-next-line no-undef
+const { Link } = ReactRouterDOM;
+import Base from "./Base";
 
 export default class Menu extends Base {
   constructor(props) {

@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-import Common from "./Common.jsx";
+import Common from "./Common";
 
 class Base extends Common {
   constructor(props) {

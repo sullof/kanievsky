@@ -1,6 +1,6 @@
-import React from "react";
+// eslint-disable-next-line no-undef
 import { isMobileOnly } from "react-device-detect";
-import Base from "./Base.jsx";
+import Base from "./Base";
 
 export default class Home extends Base {
   componentDidMount() {

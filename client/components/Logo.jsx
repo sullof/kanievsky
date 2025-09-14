@@ -1,4 +1,5 @@
-import React from "react";
+// eslint-disable-next-line no-undef
+
 import {isMobileOnly} from "react-device-detect";
 
 import Case from "case";

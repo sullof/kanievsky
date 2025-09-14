@@ -1,7 +1,6 @@
-import React from "react";
-import Base from "./Base.jsx";
-import Dropper from "./Dropper.jsx";
-import Gallery from "./Gallery.jsx";
+import Base from "./Base";
+import Dropper from "./Dropper";
+import Gallery from "./Gallery";
 
 export default class Works extends Base {
   constructor(props) {

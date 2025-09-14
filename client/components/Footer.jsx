@@ -1,5 +1,4 @@
-import React from "react";
-import Base from "./Base.jsx";
+import Base from "./Base";
 
 export default class PrimaryContent extends Base {
   render() {

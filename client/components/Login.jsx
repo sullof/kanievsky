@@ -1,6 +1,7 @@
-import React from "react";
-import Base from "./Base.jsx";
-import { Navigate } from "react-router-dom";
+import Base from "./Base";
+
+// eslint-disable-next-line no-undef
+const { Redirect } = ReactRouterDOM;
 
 export default class Login extends Base {
   constructor(props) {
@@ -36,6 +37,7 @@ export default class Login extends Base {
       this.setStore(
         {
           accessToken: res.accessToken,
+          isAdminMode: true,
         },
         true
       );
@@ -44,7 +46,7 @@ export default class Login extends Base {
 
   render() {
     if (this.Store.accessToken) {
-      return <Navigate to="/" />;
+      return <Redirect to="/" />;
     }
 
     return (

@@ -1,20 +1,20 @@
-import React from "react";
 import qs from "qs";
 import * as Scroll from "react-scroll";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+// eslint-disable-next-line no-undef
+const { BrowserRouter, Route } = ReactRouterDOM;
 
 import ls from "local-storage";
 
-import Common from "./components/Common.jsx";
-import Menu from "./components/Menu.jsx";
-import Logo from "./components/Logo.jsx";
-import Footer from "./components/Footer.jsx";
-import Home from "./components/Home.jsx";
-import Works from "./components/Works.jsx";
-import Login from "./components/Login.jsx";
-import Logout from "./components/Logout.jsx";
-import Content from "./components/Content.jsx";
-import PictureGallery from "./components/PictureGallery.jsx";
+import Common from "./components/Common";
+import Menu from "./components/Menu";
+import Logo from "./components/Logo";
+import Footer from "./components/Footer";
+import Home from "./components/Home";
+import Works from "./components/Works";
+import Login from "./components/Login";
+import Logout from "./components/Logout";
+import Content from "./components/Content";
+import PictureGallery from "./components/PictureGallery";
 
 export default class App extends Common {
   constructor(props) {
@@ -26,6 +26,7 @@ export default class App extends Common {
         editing: {},
         temp: {},
         menuVisibility: false,
+        isAdminMode: false,
       },
       width: window.innerWidth,
       height: window.innerHeight,
@@ -41,7 +42,7 @@ export default class App extends Common {
       if (Date.now() > deadline) {
         ls.remove("accessToken");
       } else {
-        this.setStore({ accessToken });
+        this.setStore({ accessToken, isAdminMode: true });
       }
     }
 
@@ -172,8 +173,9 @@ export default class App extends Common {
         rows.push(
           <Route
             key={"route" + r++}
+            exact
             path={"/works/" + what}
-            element={works(what)()}
+            component={works(what)}
           />
         );
       }
@@ -208,15 +210,13 @@ export default class App extends Common {
                 <Menu Store={this.state.Store} setStore={setStore} />
               </div>
               <div className="column column-100 only-mobile mpadded">
-                <Routes>
-                  <Route path="/" element={home()} />
-                  <Route path="/bio" element={content("bio")()} />
-                  <Route path="/news" element={content("news")()} />
-                  {rows}
-                  <Route path="/contacts" element={content("contacts")()} />
-                  <Route path="/login" element={login()} />
-                  <Route path="/logout" element={logout()} />
-                </Routes>
+                <Route exact path="/" component={home} />
+                <Route exact path="/bio" component={content("bio")} />
+                <Route exact path="/news" component={content("news")} />
+                {rows}
+                <Route exact path="/contacts" component={content("contacts")} />
+                <Route exact path="/login" component={login} />
+                <Route exact path="/logout" component={logout} />
               </div>
               <div
                 id="contenitore"
@@ -224,15 +224,17 @@ export default class App extends Common {
               >
                 <Scroll.Element name={"topcontenitore"} />
                 <div className={"extraPadding "}>
-                  <Routes>
-                    <Route path="/" element={home()} />
-                    <Route path="/bio" element={content("bio")()} />
-                    <Route path="/news" element={content("news")()} />
-                    {rows}
-                    <Route path="/contacts" element={content("contacts")()} />
-                    <Route path="/login" element={login()} />
-                    <Route path="/logout" element={logout()} />
-                  </Routes>
+                  <Route exact path="/" component={home} />
+                  <Route exact path="/bio" component={content("bio")} />
+                  <Route exact path="/news" component={content("news")} />
+                  {rows}
+                  <Route
+                    exact
+                    path="/contacts"
+                    component={content("contacts")}
+                  />
+                  <Route exact path="/login" component={login} />
+                  <Route exact path="/logout" component={logout} />
                 </div>
               </div>
               <Footer mobile={true} />

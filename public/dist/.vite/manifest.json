@@ -1,0 +1,11 @@
+{
+  "client/index.html": {
+    "file": "assets/main-CTN28fIn.js",
+    "name": "main",
+    "src": "client/index.html",
+    "isEntry": true,
+    "css": [
+      "assets/main-BMlWO5gf.css"
+    ]
+  }
+}

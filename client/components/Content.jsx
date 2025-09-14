@@ -1,5 +1,4 @@
-import React from "react";
-import Base from "./Base.jsx";
+import Base from "./Base";
 import ReactQuill from "react-quill";
 
 export default class Content extends Base {

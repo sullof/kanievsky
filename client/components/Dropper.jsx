@@ -1,5 +1,4 @@
-import React from "react";
-import Base from "./Base.jsx";
+import Base from "./Base";
 import qs from "qs";
 
 export default class Dropper extends Base {
@@ -21,6 +20,7 @@ export default class Dropper extends Base {
       "onClickHandler",
       "captionHandler",
       "triggerEdit",
+      "cancelEdit",
     ]);
   }
 
@@ -34,6 +34,17 @@ export default class Dropper extends Base {
       caption: image.caption,
       id: image.id,
       selectedFile: null,
+    });
+  }
+
+  cancelEdit() {
+    this.setState({
+      previewSrc: null,
+      caption: "",
+      id: "",
+      selectedFile: null,
+      error: null,
+      areYouSure: null,
     });
   }
 
@@ -218,6 +229,16 @@ Tecnique, size`}
             >
               Upload
             </button>
+            {(id || this.state.selectedFile) && (
+              <button
+                type="button"
+                onClick={this.cancelEdit}
+                style={{ marginLeft: "10px" }}
+                className="button button-outline"
+              >
+                Cancel
+              </button>
+            )}
             {id ? (
               <div className={"floatRight"}>
                 {areYouSure ? <b>Are you sure? </b> : null}

@@ -1,32 +1,24 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  root: 'client',
+  plugins: [react({
+    include: "**/*.{jsx,js}"
+  })],
+  esbuild: {
+    jsx: 'automatic'
+  },
   build: {
-    outDir: '../public',
+    outDir: 'public/dist',
     emptyOutDir: true,
+    manifest: true,
     rollupOptions: {
       input: {
-        main: 'client/index.html'
+        main: './client/index.html'
       }
     }
   },
   server: {
-    port: 3000,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:1965',
-        changeOrigin: true
-      }
-    }
-  },
-  esbuild: {
-    jsx: 'automatic'
-  },
-  define: {
-    global: 'globalThis'
+    port: 3000
   }
 })

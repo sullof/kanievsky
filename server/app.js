@@ -16,15 +16,37 @@ process.on("uncaughtException", function (error) {
   //   process.exit(1)
 });
 
-let indexText;
-
 function getIndex() {
-  if (!indexText) {
+  // Always read fresh to get latest manifest
+  let indexText;
     indexText = fs.readFileSync(
       path.resolve(__dirname, "../public/index.html"),
       "utf-8"
     );
-  }
+    
+    // Read Vite manifest to get correct asset URLs
+    try {
+      const manifestPath = path.resolve(__dirname, "../public/dist/.vite/manifest.json");
+      if (fs.existsSync(manifestPath)) {
+        const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf-8"));
+        const entry = manifest["client/index.html"];
+        
+        if (entry) {
+          // Replace the hardcoded asset URLs with the correct ones from manifest
+          indexText = indexText.replace(
+            /src="\/dist\/assets\/placeholder\.js"/g,
+            `src="/dist/${entry.file}"`
+          );
+          indexText = indexText.replace(
+            /href="\/dist\/assets\/placeholder\.css"/g,
+            `href="/dist/${entry.css[0]}"`
+          );
+        }
+      }
+    } catch (error) {
+      Logger.error("Error reading Vite manifest:", error.message);
+    }
+  
   return indexText;
 }
 
