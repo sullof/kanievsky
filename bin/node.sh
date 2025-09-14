@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
-docker stop kanievsky
-docker rm kanievsky
+docker stop kanievsky2
+docker rm kanievsky2
 
 #!/usr/bin/env bash
 
 docker run -d \
-  --name kanievsky \
+  --name kanievsky2 \
   -p 1965 \
   -v $PWD:/usr/src/app \
   -e VIRTUAL_HOST=kanievsky.com,www.kanievsky.com \
