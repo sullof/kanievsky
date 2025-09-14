@@ -544,7 +544,7 @@ button.cancel {
 
 @media (max-width: 768px) {
     /* Sticky header for mobile */
-    .column.leftColumn {
+    .column.only-mobile.mpadded:first-child {
         position: sticky;
         top: 0;
         background-color: whitesmoke;
